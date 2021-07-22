@@ -144,6 +144,10 @@ hr.line-div{
     margin-bottom: 1.2em;
     width: 40%;
 }
+
+button,a{
+    cursor: pointer;
+}
 /* ---------------------------------
 end Reset
 --------------------------------- */
@@ -448,6 +452,39 @@ header{
     justify-content: center;
 }
 
+//Form
+form{
+    background-color: $light;
+    //remove spinner number
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        /* display: none; <- Crashes Chrome on hover */
+        -webkit-appearance: none;
+        margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+    }
+
+    input[type=number] {
+        -moz-appearance:textfield; /* Firefox */
+    }
+    //-----
+
+    input,textarea{
+        background-color: $soft-blue;
+        border: 1px solid $soft-blue;
+        padding: 0.8em 1.2em;
+        border-radius: 20px;
+        font-weight: 600;
+        width: 100%;
+        margin: 0.3em;
+        &:focus{
+            border: 1px solid $blue;
+        }
+    }
+
+    textarea{
+        display: block;
+    }
+}
 /* ---------------------------------
 End Component
 --------------------------------- */
@@ -472,9 +509,7 @@ Section
         }
     }
 }
-/* ---------------------------------
-End Section
---------------------------------- */
+
 .spacing{
     display: flex;
     align-items: center;
@@ -666,6 +701,148 @@ End Section
 
 }
 
+//-------- About us --------
+.about{
+    padding: 7em 0px;
+    display: flex;
+    .about-space{
+        display: flex;
+        flex-direction: column;
+        >div{
+            width: 1em;
+        }
+        .blue{
+            height: 60%;
+            background-color: $blue;
+        }
+        .yellow{
+            height: 30%;
+            background-color: $yellow;
+        }
+        .light{
+            height: 30%;
+            background-color: $light;
+        }
+    }
+
+    .content{
+        padding: 0px $side;
+        max-width: 50em;
+    }
+}
+
+.visi-misi{
+    padding: $side;
+    background-color: $gray;
+    display: flex;
+    .col{
+        background-color: $light;
+        padding: 2em;
+        margin: 0px 0.6em;
+        ul{
+            margin-left: 20px;
+        }
+    }
+
+    @media only screen and (max-width: $w-sm){
+        flex-direction: column;
+
+        .col{
+            margin: 1em 0px;
+        }
+    }
+}
+//--------------------------
+
+//-------- Contact --------
+.contact{
+    padding: 5em $side;
+    padding-top: 10em;
+    background-color: $gray;
+    .contact-box{
+        display: flex;
+        align-items: flex-start;
+        background-color: $light;
+        flex-wrap: wrap;
+        .img{
+            overflow: hidden;
+            height: 42em;
+            flex: 0 0 60%;
+            background-color: #0B3C7D;
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
+            }
+        }
+
+        .col{
+            padding: 2em;
+            flex: 1;
+            &:first-child{
+                border-right: 5px solid $gray;
+            }
+        }
+
+        a.sosmed{
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            padding: 0.8em 1.2em;
+            border: 2px solid $dark;
+            font-weight: 600;
+            width: 100%;
+            margin: 1em 0px;
+            &:hover{
+                box-shadow: $hcard-shad;
+            }
+
+            &.instagram{
+                border-color: #bd0826;
+                color: #bd0826;
+                &:hover{
+                    background-color: #bd0826;
+                    color: $light;
+                }
+            }
+            &.whatsapp{
+                border-color: #039651;
+                color: #039651;
+                &:hover{
+                    background-color: #039651;
+                    color: $light;
+                }
+            }
+            &.facebook{
+                border-color: #184bd8;
+                color: #184bd8;
+
+                &:hover{
+                    background-color: #184bd8;
+                    color: $light;
+                }
+            }
+            .iconify{
+                margin-right: 0.4em;
+            }
+        }
+
+        @media only screen and (max-width: $w-sm){
+            flex-direction: column;
+            .col:first-child{
+                border-right: 0px solid $dark;
+                border-bottom: 1em solid $gray;
+            }
+        }
+    }
+}
+
+/* ---------------------------------
+End Section
+--------------------------------- */
 //footer
 footer{
     background-color: #0B3C7D;

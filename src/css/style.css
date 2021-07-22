@@ -116,6 +116,10 @@ hr.line-div {
   width: 40%;
 }
 
+button, a {
+  cursor: pointer;
+}
+
 /* ---------------------------------
 end Reset
 --------------------------------- */
@@ -541,6 +545,41 @@ header {
           justify-content: center;
 }
 
+form {
+  background-color: #fff;
+}
+
+form input::-webkit-outer-spin-button,
+form input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0;
+  /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+form input[type=number] {
+  -moz-appearance: textfield;
+  /* Firefox */
+}
+
+form input, form textarea {
+  background-color: #f0f2ff;
+  border: 1px solid #f0f2ff;
+  padding: 0.8em 1.2em;
+  border-radius: 20px;
+  font-weight: 600;
+  width: 100%;
+  margin: 0.3em;
+}
+
+form input:focus, form textarea:focus {
+  border: 1px solid #2C67B7;
+}
+
+form textarea {
+  display: block;
+}
+
 /* ---------------------------------
 End Component
 --------------------------------- */
@@ -570,9 +609,6 @@ Section
   }
 }
 
-/* ---------------------------------
-End Section
---------------------------------- */
 .spacing {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -829,6 +865,198 @@ End Section
           box-shadow: 5px 10px 20px -5px rgba(0, 175, 224, 0.18);
 }
 
+.about {
+  padding: 7em 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.about .about-space {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.about .about-space > div {
+  width: 1em;
+}
+
+.about .about-space .blue {
+  height: 60%;
+  background-color: #2C67B7;
+}
+
+.about .about-space .yellow {
+  height: 30%;
+  background-color: #F8A523;
+}
+
+.about .about-space .light {
+  height: 30%;
+  background-color: #fff;
+}
+
+.about .content {
+  padding: 0px 6%;
+  max-width: 50em;
+}
+
+.visi-misi {
+  padding: 6%;
+  background-color: #f7f7f7;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.visi-misi .col {
+  background-color: #fff;
+  padding: 2em;
+  margin: 0px 0.6em;
+}
+
+.visi-misi .col ul {
+  margin-left: 20px;
+}
+
+@media only screen and (max-width: 760px) {
+  .visi-misi {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .visi-misi .col {
+    margin: 1em 0px;
+  }
+}
+
+.contact {
+  padding: 5em 6%;
+  padding-top: 10em;
+  background-color: #f7f7f7;
+}
+
+.contact .contact-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  background-color: #fff;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.contact .contact-box .img {
+  overflow: hidden;
+  height: 42em;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 60%;
+          flex: 0 0 60%;
+  background-color: #0B3C7D;
+}
+
+.contact .contact-box .img img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+}
+
+.contact .contact-box .col {
+  padding: 2em;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.contact .contact-box .col:first-child {
+  border-right: 5px solid #f7f7f7;
+}
+
+.contact .contact-box a.sosmed {
+  text-decoration: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-radius: 20px;
+  padding: 0.8em 1.2em;
+  border: 2px solid #2F2D30;
+  font-weight: 600;
+  width: 100%;
+  margin: 1em 0px;
+}
+
+.contact .contact-box a.sosmed:hover {
+  -webkit-box-shadow: 5px 10px 20px -5px rgba(0, 175, 224, 0.18);
+          box-shadow: 5px 10px 20px -5px rgba(0, 175, 224, 0.18);
+}
+
+.contact .contact-box a.sosmed.instagram {
+  border-color: #bd0826;
+  color: #bd0826;
+}
+
+.contact .contact-box a.sosmed.instagram:hover {
+  background-color: #bd0826;
+  color: #fff;
+}
+
+.contact .contact-box a.sosmed.whatsapp {
+  border-color: #039651;
+  color: #039651;
+}
+
+.contact .contact-box a.sosmed.whatsapp:hover {
+  background-color: #039651;
+  color: #fff;
+}
+
+.contact .contact-box a.sosmed.facebook {
+  border-color: #184bd8;
+  color: #184bd8;
+}
+
+.contact .contact-box a.sosmed.facebook:hover {
+  background-color: #184bd8;
+  color: #fff;
+}
+
+.contact .contact-box a.sosmed .iconify {
+  margin-right: 0.4em;
+}
+
+@media only screen and (max-width: 760px) {
+  .contact .contact-box {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .contact .contact-box .col:first-child {
+    border-right: 0px solid #2F2D30;
+    border-bottom: 1em solid #f7f7f7;
+  }
+}
+
+/* ---------------------------------
+End Section
+--------------------------------- */
 footer {
   background-color: #0B3C7D;
 }

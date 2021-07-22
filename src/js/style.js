@@ -36,7 +36,9 @@ $('.exp-box').owlCarousel({
     nav:false,
     stagePadding: 0,
     items: 1,
-    autoPlay:true,
+    autoplay:true,
+    autoplayTimeout:3000,
+    autoplayHoverPause:true,
     margin:35,
     singleItem:true
 });
