@@ -504,16 +504,11 @@ form{
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: $light;
-            border-radius: 50px;
-            border: 1px solid $soft-blue;
-
             input{
-                display: inline-block;
-                background-color: transparent;
-                border-width: 0px;
-                padding: 0px 1.4em;
-                width: auto;
+                background-color: $light;
+                padding: 1em 1.4em;
+                border-radius: 50px;
+                width: 84%;
             }
             button {
                 background-color: $blue;
@@ -521,9 +516,6 @@ form{
                 display: flex;
                 align-items: center;
                 padding: 1em;
-                &:hover{
-                    box-shadow: $hcard-shad;
-                }
                 .iconify{
                     font-size: 20px;
                     color: $light;
@@ -544,7 +536,7 @@ form{
     }
     //-----
 
-    input,textarea{
+    input[type=number],input[type=text],input[type=email],textarea{
         background-color: $soft-blue;
         border: 1px solid $soft-blue;
         padding: 0.8em 1.2em;
