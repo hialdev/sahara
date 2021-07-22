@@ -25,6 +25,13 @@ $('.menu-toggle').click(function(){
     $('.menu-box').toggleClass('slide-menu');
 });
 
+//Alert
+$('.alert').find('#close').click(function(){
+    $(this).parent().fadeOut();
+});
+
+
+
 //------------------------ 
 // Slider
 //------------------------

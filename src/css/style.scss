@@ -154,6 +154,39 @@ end Reset
 /* ---------------------------------
 Component
 --------------------------------- */
+//alert
+.alert{
+    padding: 0.8em 1.2em;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    margin: 0.8em 0px;
+    #close{
+        display: flex;
+        align-items: center;
+        margin-left: 0.2em;
+        .iconify{
+            font-size: 18px;
+            cursor: pointer;
+        }
+    }
+    &.success{
+        background-color: #c9f5e4;
+        color: #0d804a;
+    }
+    &.fail{
+        background-color: #ffd3da;
+        color: #bd0826;
+    }
+    &.notice{
+        background-color: #fdf7a2;
+        color: #db8f00;
+    }
+}
+
 //button
 .btn{
     text-decoration: none;
@@ -455,6 +488,8 @@ header{
 //Form
 form{
     background-color: $light;
+    margin: 0;
+    padding: 0;
     //remove spinner number
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
@@ -475,10 +510,11 @@ form{
         border-radius: 20px;
         font-weight: 600;
         width: 100%;
-        margin: 0.3em;
+        margin: 0.3em 0px;
         &:focus{
             border: 1px solid $blue;
         }
+        
     }
 
     textarea{
