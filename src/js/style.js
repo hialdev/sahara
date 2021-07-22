@@ -37,7 +37,7 @@ $('.alert').find('#close').click(function(){
 //------------------------
 //Experience
 //News
-$('.exp-box').owlCarousel({
+$('.experience .exp-box').owlCarousel({
     loop:true,
     responsiveClass:true,
     nav:false,
@@ -51,7 +51,7 @@ $('.exp-box').owlCarousel({
 });
 
 //News
-$('.news-box').owlCarousel({
+$('.news .news-box').owlCarousel({
     loop:true,
     margin:10,
     responsiveClass:true,

@@ -194,7 +194,10 @@ Component
     padding: 0.8em 1.2em;
     font-weight: bold;
     margin: 0.7em 0px;
-    
+    &.btn-full{
+        border-radius: 30px;
+        width: 100%;
+    }
     &.btn-prm{
         background-color: $blue;
         color: $light;
@@ -221,6 +224,7 @@ header{
     width: 100%;
     padding: 0px;
     position: fixed;
+    top: 0;
     right: 0;
     left: 0;
     z-index: 1024;
@@ -490,6 +494,34 @@ form{
     background-color: $light;
     margin: 0;
     padding: 0;
+
+    &.search{
+        background-color: transparent;
+        width: 100%;
+        max-width: 50em;
+        margin: 1em auto;
+        fieldset{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            input{
+                background-color: $light;
+                padding: 1em 1.4em;
+                border-radius: 50px;
+            }
+            button {
+                background-color: $blue;
+                border-radius: 50px;
+                display: flex;
+                align-items: center;
+                padding: 1em;
+                .iconify{
+                    font-size: 20px;
+                    color: $light;
+                }
+            }
+        }
+    }
     //remove spinner number
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
@@ -520,6 +552,7 @@ form{
     textarea{
         display: block;
     }
+    
 }
 /* ---------------------------------
 End Component
@@ -789,7 +822,88 @@ Section
     }
 }
 //--------------------------
+//----------- News ------------
+.news-header{
+    padding-top: 7em;
+    background-color: $gray;
+    .subscribe{
+        width: 100%;
+        max-width: 50em;
+        background-color: $light;
+        margin: 0px auto;
+        h2{
+            margin-bottom: 0.4em;
+        }
+        .content{
+            padding: 2em;
+            >form{
+                margin-top: 1em;
+            }
+        }
+        .spacing>.blue{
+            width: 100%;
+        }
+    }
 
+    //responsive
+    @media only screen and (max-width: $w-sm){
+        padding-top: 5em;
+        background-color: $light;
+    }
+}
+.news-page{
+    padding: 4em $side;
+    background-color: $gray;
+    .news-box{
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        margin-bottom: 2em;
+        .news-items{
+            background-color: $light;
+            width: 23em;
+            overflow: hidden;
+            margin: 0.4em;
+            a.a-reset h3{
+                color: $blue;
+            }
+            a.a-reset p{
+                color: $dark;
+            }
+            .img{
+                padding: 0;
+                height: 15em;
+                overflow: hidden;
+                img{
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    object-position: center;
+                }
+            }
+            .content{
+                padding: 1.8em;
+            }
+
+            //hover
+            &:hover{
+                box-shadow: $hcard-shad;
+            }
+        }
+    }
+
+    //responsive
+    @media only screen and (max-width: $w-sm) {
+        .news-box{
+            .news-items{
+                width: 100%;
+                overflow: hidden;
+            }
+        }
+    }
+}
+//-----------------------------
 //-------- Contact --------
 .contact{
     padding: 5em $side;
@@ -875,6 +989,7 @@ Section
         }
     }
 }
+// ---------------------------
 
 /* ---------------------------------
 End Section
