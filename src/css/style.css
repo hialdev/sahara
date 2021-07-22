@@ -627,24 +627,21 @@ form.search fieldset input {
   background-color: #fff;
   padding: 1em 1.4em;
   border-radius: 50px;
-  width: 84%;
+  width: 100%;
+  display: inline;
 }
 
 form.search fieldset button {
   background-color: #2C67B7;
   border-radius: 50px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  display: inline-block;
   padding: 1em;
 }
 
 form.search fieldset button .iconify {
   font-size: 20px;
   color: #fff;
+  margin-bottom: -5px;
 }
 
 form input::-webkit-outer-spin-button,

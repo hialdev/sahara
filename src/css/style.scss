@@ -508,17 +508,18 @@ form{
                 background-color: $light;
                 padding: 1em 1.4em;
                 border-radius: 50px;
-                width: 84%;
+                width: 100%;
+                display: inline;
             }
             button {
                 background-color: $blue;
                 border-radius: 50px;
-                display: flex;
-                align-items: center;
+                display: inline-block;
                 padding: 1em;
                 .iconify{
                     font-size: 20px;
                     color: $light;
+                    margin-bottom: -5px;
                 }
             }
         }
