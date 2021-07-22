@@ -6,8 +6,9 @@ Variables
 
 //Color
 $blue:#2C67B7;
+$soft-blue:#f0f2ff;
 $yellow:#F8A523;
-$gray:#f0f0f0;
+$gray:#f7f7f7;
 $light:#fff;
 $dark:#2F2D30;
 
@@ -133,6 +134,15 @@ h3,.h3,.h3 *{
     @media only screen and (max-width: $w-sm) {
         font-size: $txt-sm-w2;
     }
+}
+
+hr.line-div{
+    height: 1px;
+    border-radius: 80px;
+    background-color: $dark;
+    margin: 0.8em 0px;
+    margin-bottom: 1.2em;
+    width: 40%;
 }
 /* ---------------------------------
 end Reset
@@ -262,7 +272,7 @@ header{
                 margin-bottom: 0.4em;
                 &:hover,&.active{
                     border-radius: 50px;
-                    background-color: #f8f9ff;
+                    background-color: $soft-blue;
                     a{
                         color: $blue;
                     }
@@ -498,8 +508,8 @@ End Section
 
 .construction{
     padding: 9em $side;
-    background: url('../img/map_blue.png') #f7f7f7 no-repeat;
-    background-size: 50%;
+    background: url('../img/map_blue.png') $gray no-repeat;
+    background-size: 30em;
 
     .card-box{
         display: flex;
@@ -539,22 +549,29 @@ End Section
 
 .experience{
     padding: 3em $side;
-    background-color: #f7f7f7;
-
+    background-color: $gray;
+    @media only screen and (max-width: $w-sm){
+        padding: 3em 0px;
+        overflow: hidden;
+        >h2{
+            padding: 0px $side;
+        }
+    }
     .exp-box{
-        max-width: 95%;
-        margin: 0px auto;
+        margin: 4em auto;
+        &.owl-carousel > .owl-stage-outer{
+            overflow: visible;
+        }
         .exp-items{
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
-            overflow: hidden;
-            background-color: $light;
-
+            margin-bottom: 2em;
             .img{
                 width: 60%;
                 height: 25em;
                 background-color: $blue;
+                overflow: hidden;
                 
                 img{
                     width: 100%;
@@ -563,11 +580,22 @@ End Section
                 }
             }
             .content{
-                padding: 2em;
+                display: block;
+                text-decoration: none;
+                color: $dark;
+                padding: 3em;
+                width: 100%;
+                max-width: 42em;
                 margin: 2em;
+                background-color: $light;
+                margin-left: -4em;
+                &:hover{
+                    transform: scale(1.06,1.06);
+                    h3{
+                        color: $blue;
+                    }
+                }
                 .desc{
-                    padding: 2.3em;
-                    border: 1px solid $dark;
                 }
             }
 
@@ -577,11 +605,18 @@ End Section
                 justify-content: center;
                 align-items: center;
                 .content{
-                    width: 100%;
+                    width: 85%;
+                    margin: 0px auto;
+                    margin-top: -2em;
+                    position: relative;
+                    z-index: 10;
                 }
                 .img{
                     width: 100%;
                     height: 20em;
+                    position: relative;
+                    z-index: 0;
+                    margin-bottom: -3em;
                 }
             }
         }
@@ -590,7 +625,7 @@ End Section
 
 .news{
     padding: 4em $side;
-    background-color: #f7f7f7;
+    background-color: $gray;
 
     .news-box{
         display: flex;
@@ -683,6 +718,10 @@ footer{
             padding-left: $side;
             display: flex;
             align-items: center;
+            >div{
+                height: 1em;
+                margin: auto 0px;
+            }
         }
         div.yellow{
             background-color: $yellow;

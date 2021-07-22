@@ -107,6 +107,15 @@ h3, .h3, .h3 * {
   }
 }
 
+hr.line-div {
+  height: 1px;
+  border-radius: 80px;
+  background-color: #2F2D30;
+  margin: 0.8em 0px;
+  margin-bottom: 1.2em;
+  width: 40%;
+}
+
 /* ---------------------------------
 end Reset
 --------------------------------- */
@@ -277,7 +286,7 @@ header {
   }
   .header .menu-box nav.menu ul li:hover, .header .menu-box nav.menu ul li.active {
     border-radius: 50px;
-    background-color: #f8f9ff;
+    background-color: #f0f2ff;
   }
   .header .menu-box nav.menu ul li:hover a, .header .menu-box nav.menu ul li.active a {
     color: #2C67B7;
@@ -417,7 +426,7 @@ header {
 }
 
 .header nav.menu li > ul li:not(:last-child) {
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f7f7f7;
 }
 
 .header nav.menu li > ul li a {
@@ -589,7 +598,7 @@ End Section
 }
 
 .spacing div.light {
-  background-color: #f0f0f0;
+  background-color: #f7f7f7;
   width: 60%;
 }
 
@@ -606,7 +615,7 @@ End Section
 .construction {
   padding: 9em 6%;
   background: url("../img/map_blue.png") #f7f7f7 no-repeat;
-  background-size: 50%;
+  background-size: 30em;
 }
 
 .construction .card-box {
@@ -668,9 +677,22 @@ End Section
   background-color: #f7f7f7;
 }
 
+@media only screen and (max-width: 760px) {
+  .experience {
+    padding: 3em 0px;
+    overflow: hidden;
+  }
+  .experience > h2 {
+    padding: 0px 6%;
+  }
+}
+
 .experience .exp-box {
-  max-width: 95%;
-  margin: 0px auto;
+  margin: 4em auto;
+}
+
+.experience .exp-box.owl-carousel > .owl-stage-outer {
+  overflow: visible;
 }
 
 .experience .exp-box .exp-items {
@@ -683,14 +705,14 @@ End Section
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  overflow: hidden;
-  background-color: #fff;
+  margin-bottom: 2em;
 }
 
 .experience .exp-box .exp-items .img {
   width: 60%;
   height: 25em;
   background-color: #2C67B7;
+  overflow: hidden;
 }
 
 .experience .exp-box .exp-items .img img {
@@ -701,13 +723,24 @@ End Section
 }
 
 .experience .exp-box .exp-items .content {
-  padding: 2em;
+  display: block;
+  text-decoration: none;
+  color: #2F2D30;
+  padding: 3em;
+  width: 100%;
+  max-width: 42em;
   margin: 2em;
+  background-color: #fff;
+  margin-left: -4em;
 }
 
-.experience .exp-box .exp-items .content .desc {
-  padding: 2.3em;
-  border: 1px solid #2F2D30;
+.experience .exp-box .exp-items .content:hover {
+  -webkit-transform: scale(1.06, 1.06);
+          transform: scale(1.06, 1.06);
+}
+
+.experience .exp-box .exp-items .content:hover h3 {
+  color: #2C67B7;
 }
 
 @media only screen and (max-width: 760px) {
@@ -724,11 +757,18 @@ End Section
             align-items: center;
   }
   .experience .exp-box .exp-items .content {
-    width: 100%;
+    width: 85%;
+    margin: 0px auto;
+    margin-top: -2em;
+    position: relative;
+    z-index: 10;
   }
   .experience .exp-box .exp-items .img {
     width: 100%;
     height: 20em;
+    position: relative;
+    z-index: 0;
+    margin-bottom: -3em;
   }
 }
 
@@ -877,13 +917,18 @@ footer .credits div.blue {
           align-items: center;
 }
 
+footer .credits div.blue > div {
+  height: 1em;
+  margin: auto 0px;
+}
+
 footer .credits div.yellow {
   background-color: #F8A523;
   width: 30%;
 }
 
 footer .credits div.light {
-  background-color: #f0f0f0;
+  background-color: #f7f7f7;
   width: 10%;
 }
 /*# sourceMappingURL=style.css.map */

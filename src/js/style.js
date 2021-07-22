@@ -28,6 +28,18 @@ $('.menu-toggle').click(function(){
 //------------------------ 
 // Slider
 //------------------------
+//Experience
+//News
+$('.exp-box').owlCarousel({
+    loop:true,
+    responsiveClass:true,
+    nav:false,
+    stagePadding: 0,
+    items: 1,
+    autoPlay:true,
+    margin:35,
+    singleItem:true
+});
 
 //News
 $('.news-box').owlCarousel({
@@ -48,4 +60,4 @@ $('.news-box').owlCarousel({
             loop:false
         }
     }
-})
+});
