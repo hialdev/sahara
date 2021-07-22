@@ -621,12 +621,16 @@ form.search fieldset {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  background-color: #fff;
+  border-radius: 50px;
+  border: 1px solid #f0f2ff;
 }
 
 form.search fieldset input {
-  background-color: #fff;
-  padding: 1em 1.4em;
-  border-radius: 50px;
+  display: inline-block;
+  background-color: transparent;
+  border-width: 0px;
+  padding: 0px 1.4em;
 }
 
 form.search fieldset button {
@@ -639,6 +643,11 @@ form.search fieldset button {
       -ms-flex-align: center;
           align-items: center;
   padding: 1em;
+}
+
+form.search fieldset button:hover {
+  -webkit-box-shadow: 5px 10px 20px -5px rgba(0, 175, 224, 0.18);
+          box-shadow: 5px 10px 20px -5px rgba(0, 175, 224, 0.18);
 }
 
 form.search fieldset button .iconify {

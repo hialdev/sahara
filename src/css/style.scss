@@ -504,10 +504,15 @@ form{
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background-color: $light;
+            border-radius: 50px;
+            border: 1px solid $soft-blue;
+
             input{
-                background-color: $light;
-                padding: 1em 1.4em;
-                border-radius: 50px;
+                display: inline-block;
+                background-color: transparent;
+                border-width: 0px;
+                padding: 0px 1.4em;
             }
             button {
                 background-color: $blue;
@@ -515,6 +520,9 @@ form{
                 display: flex;
                 align-items: center;
                 padding: 1em;
+                &:hover{
+                    box-shadow: $hcard-shad;
+                }
                 .iconify{
                     font-size: 20px;
                     color: $light;
