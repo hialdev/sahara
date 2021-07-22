@@ -644,6 +644,12 @@ form.search fieldset button .iconify {
   margin-bottom: -5px;
 }
 
+@media only screen and (max-width: 760px) {
+  form.search fieldset button {
+    display: none;
+  }
+}
+
 form input::-webkit-outer-spin-button,
 form input::-webkit-inner-spin-button {
   /* display: none; <- Crashes Chrome on hover */
