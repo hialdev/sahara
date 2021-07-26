@@ -70,3 +70,23 @@ $('.news .news-box').owlCarousel({
         }
     }
 });
+
+//Solution
+$('.const-page .solution .box').owlCarousel({
+    margin:5,
+    responsiveClass:true,
+    nav:false,
+    dots:true,
+    responsive:{
+        0:{
+            items:2,
+        },
+        600:{
+            items:3,
+        },
+        1000:{
+            items:4,
+            loop:false
+        }
+    }
+});

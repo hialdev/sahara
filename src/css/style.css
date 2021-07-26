@@ -1394,18 +1394,10 @@ Section
   margin-top: 1em;
 }
 
-.const-page .solution .box {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: 1fr 1fr 1fr 1fr;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 0.8em;
-}
-
 .const-page .solution .box .item {
   display: block;
   position: relative;
-  min-height: 12em;
+  height: 15em;
   max-height: 18em;
   overflow: hidden;
 }
@@ -1427,20 +1419,6 @@ Section
   background-color: #0b3c7d7e;
   padding: 1em;
   color: #fff;
-}
-
-@media only screen and (max-width: 1095px) {
-  .const-page .solution .box {
-    -ms-grid-columns: 1fr 1fr 1fr;
-        grid-template-columns: 1fr 1fr 1fr;
-  }
-}
-
-@media only screen and (max-width: 760px) {
-  .const-page .solution .box {
-    -ms-grid-columns: 1fr 1fr;
-        grid-template-columns: 1fr 1fr;
-  }
 }
 
 /* ---------------------------------

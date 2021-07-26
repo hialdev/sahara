@@ -1114,13 +1114,10 @@ Section
         background-color: $light;
         margin-top: 1em;
         .box{
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 0.8em;
             .item{
                 display: block;
                 position: relative;
-                min-height: 12em;
+                height: 15em;
                 max-height: 18em;
                 overflow: hidden;
                 >img{
@@ -1137,14 +1134,6 @@ Section
                     padding: 1em;
                     color: $light;
                 }
-            }
-
-            //responsive
-            @media only screen and (max-width: $w-lg){
-                grid-template-columns: 1fr 1fr 1fr;
-            }
-            @media only screen and (max-width: $w-sm){
-                grid-template-columns: 1fr 1fr;
             }
         }
     }
