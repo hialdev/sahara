@@ -154,6 +154,8 @@ end Reset
 /* ---------------------------------
 Component
 --------------------------------- */
+//Pagination
+
 //alert
 .alert{
     padding: 0.8em 1.2em;
@@ -659,6 +661,7 @@ Section
 .experience{
     padding: 3em $side;
     background-color: $gray;
+    overflow: hidden;
     @media only screen and (max-width: $w-sm){
         padding: 3em 0px;
         overflow: hidden;
@@ -668,6 +671,7 @@ Section
     }
     .exp-box{
         margin: 4em auto;
+        
         &.owl-carousel > .owl-stage-outer{
             overflow: visible;
         }
@@ -996,6 +1000,156 @@ Section
 }
 // ---------------------------
 
+// ------------Exp Page---------------
+.hero-exp{
+    padding: $side;
+    padding-top: 9em;
+    > .content{
+        color: $light;
+        max-width: 50em;
+    }
+}
+.exp-page{
+    padding: 6em $side;
+    background-color: $gray;
+    .box{
+        margin: 4em 0px;
+        .exp-items{
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 2em;
+
+            .img{
+                width: 60%;
+                height: 25em;
+                background-color: $blue;
+                overflow: hidden;
+                
+                img{
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+            .content{
+                display: block;
+                text-decoration: none;
+                color: $dark;
+                padding: 3em;
+                width: 100%;
+                max-width: 42em;
+                margin: 2em;
+                background-color: $light;
+                margin-left: -4em;
+                &:hover{
+                    transform: scale(1.06,1.06);
+                    h3{
+                        color: $blue;
+                    }
+                }
+                .desc{
+                }
+            }
+
+            //responsive
+            @media only screen and (max-width: $w-sm){
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                .content{
+                    width: 85%;
+                    margin: 0px auto;
+                    margin-top: -2em;
+                    position: relative;
+                    z-index: 10;
+                }
+                .img{
+                    width: 100%;
+                    height: 20em;
+                    position: relative;
+                    z-index: 0;
+                    margin-bottom: -3em;
+                }
+            }
+        }
+    }
+}
+// ---------------------------
+
+// ------------- Bussiness --------------
+.bussiness{
+    padding: 5em $side;
+    padding-top: 7em;
+    background-color: $gray;
+    .box{
+        background-color: $light;
+        padding: 2em;
+        ul{
+            margin-left: 20px;
+        }
+    }
+}
+// ---------------------------
+
+// -------------Construction--------------
+.const-hero{
+    padding: 5em $side;
+    padding-top: 8.5em;
+    color: $light;
+    > .content{
+        max-width: 50em;
+    }
+}
+.const-page{
+    background-color: $gray;
+    padding: 4em $side;
+    > .box{
+        background-color: $light;
+        padding: 2em;
+    }
+
+    .solution{
+        padding: 2em;
+        background-color: $light;
+        margin-top: 1em;
+        .box{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 0.8em;
+            .item{
+                display: block;
+                position: relative;
+                min-height: 12em;
+                max-height: 18em;
+                overflow: hidden;
+                >img{
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+                .content{
+                    display: flex;
+                    width: 100%;
+                    position: absolute;
+                    bottom: 0;
+                    background-color: #0b3c7d7e;
+                    padding: 1em;
+                    color: $light;
+                }
+            }
+
+            //responsive
+            @media only screen and (max-width: $w-lg){
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+            @media only screen and (max-width: $w-sm){
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    }
+}
+// ---------------------------
 /* ---------------------------------
 End Section
 --------------------------------- */
