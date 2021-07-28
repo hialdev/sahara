@@ -29,7 +29,7 @@ $txt-w2:14px;
 $txt-sm-w2:12px;
 
 //Margin&Padding
-$side:6%;
+$side:5.3%;
 $btn-pad:0.7em 1.5em;
 
 //Box
@@ -516,12 +516,12 @@ form{
             button {
                 background-color: $blue;
                 border-radius: 50px;
-                display: inline-block;
+                display: inline-flex;
+                align-items: center;
                 padding: 1em;
                 .iconify{
                     font-size: 20px;
                     color: $light;
-                    margin-bottom: -5px;
                 }
                 @media only screen and (max-width: $w-sm){
                     display: none;
@@ -1178,6 +1178,69 @@ Section
             }
         }
     }
+}
+// ---------------------------
+
+// -------------Exp Item Page--------------
+.exp-item{
+    padding: 5em $side;
+    padding-top: 8em;
+    background-color: $gray;
+    overflow: hidden;
+    >h1{
+        margin: 1em 0px;
+    }
+    >.exp-box{
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        background-color: $light;
+        >img{
+            width: 50%;
+            display: block;
+        }
+        >.desc{
+            padding: $side;
+            background-color: $light;
+        }
+    }
+    >.content{
+        padding: $side;
+        background-color: $light;
+        margin-top: 2em;
+    }
+    >.gallery{
+        padding: $side;
+        background-color: $light;
+        margin-top: 2em;
+        .gallery-box{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            >img{
+                width: 100%;
+                height: 100%;
+                min-height: 12em;
+                object-fit: cover;
+                display: block;
+            }
+        }
+    }
+
+    @media only screen and (max-width: $w-sm){
+        >.exp-box{
+            flex-direction: column;
+            justify-content: center;
+            >img{
+                width: 100%;
+            }
+        }
+        >.gallery{
+            .gallery-box{
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    }
+    
 }
 // ---------------------------
 /* ---------------------------------
