@@ -1139,6 +1139,47 @@ Section
     }
 }
 // ---------------------------
+
+// -------------News Page--------------
+.news-page{
+    background-color: $gray;
+    padding-top: 7em;
+
+    >.news{
+        background-color: $light;
+        width: 100%;
+        max-width: 60em;
+        margin: 0px auto;
+        padding: 0px;
+        padding: 2em 0px;
+        overflow: hidden;
+        >img{
+            margin: 2em 0px;
+            width: 100%;
+            padding: 0px;
+            display: block;
+        }
+        .head{
+            padding: 0px $side;
+            >h1{
+                text-transform: capitalize;
+            }
+        }
+        .content{
+            padding: 2em $side;
+            >img{
+                width: 100%;
+                margin: 2em 0px;
+                display: block;
+            }
+            >h2{
+                margin-bottom: 0.4em;
+                margin-top: 0.9em;
+            }
+        }
+    }
+}
+// ---------------------------
 /* ---------------------------------
 End Section
 --------------------------------- */

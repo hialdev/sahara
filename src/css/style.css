@@ -1421,6 +1421,51 @@ Section
   color: #fff;
 }
 
+.news-page {
+  background-color: #f7f7f7;
+  padding-top: 7em;
+}
+
+.news-page > .news {
+  background-color: #fff;
+  width: 100%;
+  max-width: 60em;
+  margin: 0px auto;
+  padding: 0px;
+  padding: 2em 0px;
+  overflow: hidden;
+}
+
+.news-page > .news > img {
+  margin: 2em 0px;
+  width: 100%;
+  padding: 0px;
+  display: block;
+}
+
+.news-page > .news .head {
+  padding: 0px 6%;
+}
+
+.news-page > .news .head > h1 {
+  text-transform: capitalize;
+}
+
+.news-page > .news .content {
+  padding: 2em 6%;
+}
+
+.news-page > .news .content > img {
+  width: 100%;
+  margin: 2em 0px;
+  display: block;
+}
+
+.news-page > .news .content > h2 {
+  margin-bottom: 0.4em;
+  margin-top: 0.9em;
+}
+
 /* ---------------------------------
 End Section
 --------------------------------- */
