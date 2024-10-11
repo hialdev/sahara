@@ -1,7 +1,7 @@
 @extends('templates.crud.add', ['routeName'=>'quotation'])
 
-@section('title', 'Add Quotation')
-@section('description', 'Add Client before Add quotation')
+@section('title', 'Edit Quotation : '.$quotation->no)
+@section('description', 'Edit Quotation for '.$quotation->client->name)
 
 @section('form')
     <style>
@@ -13,6 +13,22 @@
             color: white !important;
         }
     </style>
+
+    <div class="d-flex align-items-center justify-content-end gap-2 mb-3">
+        <button type="button" id="resetEdit" class="btn btn-sm btn-light-secondary d-flex align-items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                <path fill="none" stroke="currentColor" stroke-width="2" d="M20 8c-1.403-2.96-4.463-5-8-5a9 9 0 1 0 0 18a9 9 0 0 0 9-9m0-9v6h-6" />
+            </svg>
+            Reset Edit
+        </button>
+        <button type="button" class="btn btn-sm btn-danger d-flex align-items-center gap-2" data-bs-toggle="modal"
+            data-bs-target="#danger-{{$quotation->id}}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                <path fill="currentColor" d="m20.37 8.91l-1 1.73l-12.13-7l1-1.73l3.04 1.75l1.36-.37l4.33 2.5l.37 1.37zM6 19V7h5.07L18 11v8a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2" />
+            </svg>
+            Hapus
+        </button>
+    </div>
 
     <form action="{{route('quotation.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -58,13 +74,13 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="no" class="form-label">No. Quotation (Automatic)</label>
-                                        <input type="text" id="no" name="no" class="form-control" placeholder="No. Quotation" value="QT/xxx/RSM/xx/xxxx" disabled id="name" value="{{ old('name') }}" required>
+                                        <input type="text" id="no" name="no" class="form-control" placeholder="No. Quotation" value="{{$quotation->no}}" disabled id="name" value="{{ old('name') }}" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="name" class="form-label">Date Letter <span class="text-danger">*</span></label>
-                                        <input type="date" name="date" id="date" class="form-control mb-3 flatpickr-no-config" placeholder="Select date.." required>
+                                        <input type="date" name="date" id="date" class="form-control mb-3 flatpickr-no-config" placeholder="Select date.." value="{{$quotation->date}}" required>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -73,7 +89,7 @@
                                         <select id="client" name="client" class="form-select" required>
                                             <option value="">Pilih Client</option>
                                             @forelse ($clients as $client)
-                                            <option value="{{$client->id}}">{{$client->name}}</option>
+                                            <option value="{{$client->id}}" {{$client->id == $quotation->client->id ? 'selected' : ''}}>{{$client->name}}</option>
                                             @empty
                                             <option value="">Tidak ada client tersedia</option>
                                             @endforelse
@@ -105,31 +121,31 @@
                                                 </div>
                                             </div> --}}
                                         </div>
-                                        <div class="text-secondary">Client belum terdaftar? <a href="{{route('client.add')}}" target="_blank" class="ms-2">Tambah Client</a></div>
+                                        <div class="text-secondary">Client belum terdaftar? <a href="{{route('client.add')}}" class="ms-2">Tambah Client</a></div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="Untuk Perhatian" class="mb-2">Untuk Perhatian <span class="text-danger">*</span></label>
-                                        <input type="text" id="for" name="for" class="form-control" placeholder="Bpk / Ibu / Pimpinan">
+                                        <input type="text" id="for" name="for" class="form-control" placeholder="Bpk / Ibu / Pimpinan" value="{{old('for', $quotation->for)}}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="perihal" class="mb-2">Perihal <span class="text-danger">*</span></label>
-                                        <input type="text" id="perihal" name="perihal" class="form-control" required placeholder="Default : Penawaran Harga" value="{{ old('perihal') ?? 'Penawaran Harga'}}">
+                                        <input type="text" id="perihal" name="perihal" class="form-control" required placeholder="Default : Penawaran Harga" value="{{ old('perihal', $quotation->perihal)}}">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="message" class="form-label">Pesan <span class="text-danger">*</span></label>
-                                        <textarea id="altiny" cols="30" rows="5" name="message" required>Bersama ini kami ajukan Penawaran Harga dengan harga dan detail penawaran sebagai berikut :</textarea>
+                                        <textarea id="altiny" cols="30" rows="5" name="message" required>{{old('message', $quotation->message)}}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="keterangan" class="form-label">keterangan</label>
-                                        <textarea id="keterangan" cols="30" rows="5" name="keterangan"></textarea>
+                                        <textarea id="keterangan" cols="30" rows="5" name="keterangan">{{old('keterangan', $quotation->keterangan)}}</textarea>
                                     </div>
                                 </div>
                                 {{-- Submit Button --}}
@@ -145,7 +161,7 @@
                                 <div class="col-md-12">
                                     <div class="d-flex align-items-center justify-content-between mb-3">
                                         <h6 class="m-0">Offering Products</h6>
-                                        <button class="btn btn-primary"
+                                        <button type="button" class="btn btn-primary"
                                             data-bs-toggle="modal"
                                             data-bs-target="#addProduct"
                                             >Add Product
@@ -438,13 +454,13 @@
                             <div class="p-1">
                                 <table class="mb-2 w-100">
                                     <tr>
-                                        <td width="60">Nomor</td><td width="10" class="pl-1 pr-1">:</td><td>QT/xxx/RSM/xx/xxxx</td>
+                                        <td width="60">Nomor</td><td width="10" class="pl-1 pr-1">:</td><td>{{$quotation->no}}</td>
                                     </tr>
                                     <tr>
                                         <td width="60">Lampiran</td><td width="10" class="pl-1 pr-1">:</td><td>-</td>
                                     </tr>
                                     <tr>
-                                        <td width="60">Perihal</td><td width="10" class="pl-1 pr-1">:</td><td><span class="previewPerihal">Penawaran Harga</span></td>
+                                        <td width="60">Perihal</td><td width="10" class="pl-1 pr-1">:</td><td><span class="previewPerihal">{{$quotation->perihal}}</span></td>
                                     </tr>
                                     <tr>
                                         <td width="60" class="align-top">Kepada</td>
@@ -576,6 +592,42 @@
         </div>
     </div>
 </div>
+
+{{-- Modal Delete --}}
+<div class="modal fade text-left" id="danger-{{$quotation->id}}" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel120" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+        role="document">
+        <div class="modal-content rounded-4">
+            <div class="modal-header bg-danger border-0">
+                <h5 class="modal-title white" id="myModalLabel120">Confirmation Delete</h5>
+                <button type="button" class="btn btn-danger bg-danger" data-bs-dismiss="modal"
+                    aria-label="Close">
+                    <i class="mb-1 bi-x-lg"></i>
+                </button>
+            </div>
+            <div class="modal-body border-0">
+                Apakah anda yakin menghapus data Quotation dengan nomor <span class="fw-bold">{{$quotation->no}}</span> untuk client <span class="fw-bold">{{$quotation->client->name}}</span> ? data yang dihapus bersifat permanen tidak dapat dikembalikan
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-light-secondary"
+                    data-bs-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Batal</span>
+                </button>
+                <form action="{{route('quotation.destroy', $quotation->id)}}" method="POST">
+                    @csrf
+                    @method('delete')
+                    <button type="submit" class="btn btn-danger ms-1"
+                        data-bs-dismiss="modal">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Ya, Hapus</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @php
  $userId = Auth::user()->id;  
 @endphp
@@ -663,13 +715,14 @@ document.addEventListener("DOMContentLoaded", () => {
 flatpickr('.flatpickr-no-config', {
     enableTime: false,
     dateFormat: "d M Y", 
-    defaultDate: "today",
+    defaultDate: new Date("{{$quotation->date}}"),
 })
 </script>
 
 <script>
 $(document).ready(function() {
     let userId = "{{$userId}}";
+    let quotationId = "{{$quotation->id}}";
     // Pastikan content-quotation-data aktif di awal
     $('.content-quotation-data').show();
     $('.content-quotation-product').hide();
@@ -792,6 +845,25 @@ $(document).ready(function() {
 
     // Event untuk menghitung total ketika price diubah
     $('#price').on('keyup', function() {
+        let value = $(this).val().replace(/[^,\d]/g, '').toString();
+        
+        let split = value.split(',');
+        let sisa = split[0].length % 3;
+        let rupiah = split[0].substr(0, sisa);
+        let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+        if (ribuan) {
+            let separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+
+        rupiah = split[1] !== undefined ? rupiah + ',' + split[1] : rupiah;
+
+        $(this).val('Rp ' + rupiah);
+    });
+
+    // Event untuk menghitung total ketika price diubah
+    $('#editPrice').on('keyup', function() {
         let value = $(this).val().replace(/[^,\d]/g, '').toString();
         
         let split = value.split(',');
@@ -978,12 +1050,12 @@ $(document).ready(function() {
             keterangan: keterangan,
         };
 
-        console.log(dataQuotation);
-        localStorage.setItem('data_quotation_'+userId, JSON.stringify(dataQuotation));
+        localStorage.setItem('data_quotation_'+quotationId+userId, JSON.stringify(dataQuotation));
     }
 
     $('#savePreview').click(function(){
         saveDataQuotationToLocal();
+        saveQuotationToLocalStorage();
         populatePreviewModal();
         $('#previewModal').modal('show');
     });
@@ -1010,20 +1082,40 @@ $(document).ready(function() {
             price_sale: priceSale,
             packaging: packaging,
         };
+        console.log(productQuotation);
 
         // Ambil array dari localStorage atau buat array baru jika belum ada
-        let quotations = JSON.parse(localStorage.getItem('product_quotation_'+userId)) || [];
+        let products = @json($quotation->products);
+        products = JSON.parse(products);
+        
+        let quotations = JSON.parse(localStorage.getItem('product_quotation_'+quotationId+userId)) || [];
+        console.log('Quotations',quotations);
+        console.log('Products',products);
+        console.log(quotations.length < 1);
+        if(quotations.length < 1){
+            localStorage.setItem('product_quotation_'+quotationId+userId, JSON.stringify(products));
+            console.log('Setted');
+        }
+
+        quotations = JSON.parse(localStorage.getItem('product_quotation_'+quotationId+userId)) || [];
 
         if (index !== null) {
             // Edit produk di array berdasarkan index
             quotations[index] = productQuotation;
         } else {
+            const isIdExist = quotations.some(function(quotation) {
+                return quotation.id === productQuotation.id;
+            });
             // Tambahkan produk baru ke array
-            quotations.push(productQuotation);
+            if(productQuotation.id.length > 1 && !isIdExist){
+                quotations.push(productQuotation);
+            }else{
+                console.log('product already exists');
+            }
         }
 
         // Simpan array ke localStorage
-        localStorage.setItem('product_quotation_'+userId, JSON.stringify(quotations));
+        localStorage.setItem('product_quotation_'+quotationId+userId, JSON.stringify(quotations));
         
         // Update tampilan HTML setelah menyimpan
         renderProductList();
@@ -1066,11 +1158,11 @@ $(document).ready(function() {
     // Event untuk mengisi modal edit saat tombol edit diklik
     $(document).on('click', '.edit-product', function() {
         let index = $(this).data('index');
-        let quotations = JSON.parse(localStorage.getItem('product_quotation_'+userId)) || [];
+        let quotations = JSON.parse(localStorage.getItem('product_quotation_'+quotationId+userId)) || [];
         let product = quotations[index];
 
         // Isi form edit dengan data produk yang akan diedit
-        editProductChoices.setChoiceByValue(product.id);
+        editProductChoices.setChoiceByValue(product?.id);
         // Check if id_satuan is defined before making the AJAX call
         if (product.id_satuan) {
             $.ajax({
@@ -1124,16 +1216,18 @@ $(document).ready(function() {
 
     // Fungsi untuk me-render daftar produk
     function renderProductList() {
-        let quotations = JSON.parse(localStorage.getItem('product_quotation_'+userId)) || [];
-        
+        let localProductQuotation = JSON.parse(localStorage.getItem('product_quotation_'+quotationId+userId)) || [];
         // Pastikan ada data sebelum merender
+        let dataProductQuotation = @json($quotation->products);
+        dataProductQuotation = JSON.parse(dataProductQuotation);
+        let quotations = [];
+        quotations = localProductQuotation.length === 0 ? dataProductQuotation : localProductQuotation;
         if (quotations.length === 0) {
             $('#productList').html('<p>No products added.</p>');
-            return; // Keluar dari fungsi jika tidak ada produk
         }
 
         let productListHtml = '';
-
+        console.log(quotations);
         quotations.forEach((product, index) => {
             productListHtml += `
                 <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3 p-3 border rounded-3">
@@ -1156,7 +1250,7 @@ $(document).ready(function() {
                         </div>
                     </div>
                     <div class="d-flex align-items-center gap-2">
-                        <button class="d-flex align-items-center justify-content-center btn btn-sm btn-outline-primary block edit-product" style="aspect-ratio:1/1" data-index="${index}" data-bs-toggle="modal" data-bs-target="#editProductModal">
+                        <button type="button" class="d-flex align-items-center justify-content-center btn btn-sm btn-outline-primary block edit-product" style="aspect-ratio:1/1" data-index="${index}" data-bs-toggle="modal" data-bs-target="#editProductModal">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                 <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
                                     <path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.1 2.1 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621" />
@@ -1201,13 +1295,13 @@ $(document).ready(function() {
         };
 
         // Ambil array dari localStorage atau buat array baru jika belum ada
-        let quotations = JSON.parse(localStorage.getItem('product_quotation_'+userId)) || [];
+        let quotations = JSON.parse(localStorage.getItem('product_quotation_'+quotationId+userId)) || [];
 
         // Edit produk di array berdasarkan index
         quotations[index] = productQuotation;
 
         // Simpan array ke localStorage
-        localStorage.setItem('product_quotation_'+userId, JSON.stringify(quotations));
+        localStorage.setItem('product_quotation_'+quotationId+userId, JSON.stringify(quotations));
 
         // Update tampilan HTML setelah menyimpan
         renderProductList();
@@ -1221,7 +1315,7 @@ $(document).ready(function() {
 
     // Fungsi untuk mengedit produk
     function editProduct(index) {
-        let quotations = JSON.parse(localStorage.getItem('product_quotation_'+userId)) || [];
+        let quotations = JSON.parse(localStorage.getItem('product_quotation_'+quotationId+userId)) || [];
         let product = quotations[index];
         
         // Ambil packaging berdasarkan satuan_id dari product
@@ -1250,13 +1344,14 @@ $(document).ready(function() {
 
     // Fungsi untuk menghapus produk
     function deleteProduct(index) {
-        let quotations = JSON.parse(localStorage.getItem('product_quotation_'+userId)) || [];
+        let quotations = JSON.parse(localStorage.getItem('product_quotation_'+quotationId+userId)) || [];
+        console.log(quotations);
         console.log('clicked');
         // Hapus produk dari array
         quotations.splice(index, 1);
 
         // Simpan array baru ke localStorage
-        localStorage.setItem('product_quotation_'+userId, JSON.stringify(quotations));
+        localStorage.setItem('product_quotation_'+quotationId+userId, JSON.stringify(quotations));
 
         // Render ulang produk
         renderProductList();
@@ -1269,31 +1364,52 @@ $(document).ready(function() {
         $('#price').val('');
         $('input[name=product-satuan]').val('');
         $('#packaging').val('');
+    }
 
-        // Ubah kembali tombol Add
-        $('#addQuotationProduct').text('Add Quotation Product');
-        $('#addQuotationProduct').off('click').on('click', function() {
-            saveQuotationToLocalStorage();
+    function setDataQuotation(){
+        let localQuotation = JSON.parse(localStorage.getItem('data_quotation_'+quotationId+userId)) || {};
+        
+        let dataQuotation = {
+            date : "{{$quotation->date}}",
+            client : "{{$quotation->client_id}}",
+            perihal : "{{$quotation->perihal}}",
+            for : "{{$quotation->for}}",
+            message : @json($quotation->message),
+            keterangan : @json($quotation->keterangan),
+        }
+        clientChoices.setChoiceByValue(localQuotation.client ?? dataQuotation.client);
+        $('#perihal').val(localQuotation.perihal ?? dataQuotation.perihal);
+        $('#for').val(localQuotation.for ?? dataQuotation.for);
+        tinymce.get('altiny').setContent(localQuotation.message ?? dataQuotation.message);
+        tinymce.get('keterangan').setContent(localQuotation.keterangan ?? dataQuotation.keterangan);
+    }
+
+    function setProductQuotation(){
+        let productQuotations = JSON.parse(localStorage.getItem('product_quotation_'+quotationId+userId)) || {};
+        let quotations = @json($quotation->products);
+        localStorage.setItem('product_quotation_'+quotationId+userId, JSON.stringify(JSON.parse(quotations)));
+    }
+
+    function resetLocal(){
+        localStorage.removeItem('product_quotation_'+quotationId+userId);
+        localStorage.removeItem('data_quotation_'+quotationId+userId);
+        Toast.fire({
+            icon: 'success',
+            title: 'Berhasil mereset ulang pengeditan' // Pesan sukses dari response JSON
         });
+        setDataQuotation();
+        renderProductList();
     }
 
-    function setDataProduct(){
-        let dataQuotation = JSON.parse(localStorage.getItem('data_quotation_'+userId)) || [];
-        $('#date').val(dataQuotation.date);
-        clientChoices.setChoiceByValue(dataQuotation.client);
-        $('#perihal').val(dataQuotation.perihal);
-        $('#for').val(dataQuotation.for);
-        $('textarea[name=message]').val(dataQuotation.message);
-        $('textarea[name=keterangan]').val(dataQuotation.keterangan);
-    }
-
-
+    $('#resetEdit').on('click', function(){
+        resetLocal();
+    });
     // ----------- Preview
     // Function to open and populate the modal with data from localStorage
     function populatePreviewModal() {
         // Fetch the data from localStorage
-        let dataQuotation = JSON.parse(localStorage.getItem('data_quotation_'+userId)) || {};
-        let productQuotations = JSON.parse(localStorage.getItem('product_quotation_'+userId)) || [];
+        let dataQuotation = JSON.parse(localStorage.getItem('data_quotation_'+quotationId+userId)) || {};
+        let productQuotations = JSON.parse(localStorage.getItem('product_quotation_'+quotationId+userId)) || [];
         $.ajax({
             url: `/ajax/client/${dataQuotation.client}`,
             type: 'GET',
@@ -1304,7 +1420,7 @@ $(document).ready(function() {
             }
         });
         $('.previewFor').text(dataQuotation.for || 'PT MBM');
-        $('.previewPerihal').text(dataQuotation.perihal || 'Penawaran Harga');
+        $('.previewPerihal').text(dataQuotation?.perihal || 'Penawaran Harga');
         // Populate basic information fields
         $('.previewDate').text(dataQuotation.date || '13 Oktober 2021');
 
@@ -1347,8 +1463,8 @@ $(document).ready(function() {
     // Event ketika tombol saveQuotation diklik
     $('#saveQuotation').on('click', function() {
         // Ambil data dari localStorage (atau sumber lain)
-        let dataQuotation = JSON.parse(localStorage.getItem('data_quotation_'+userId));
-        let productQuotations = JSON.parse(localStorage.getItem('product_quotation_'+userId));
+        let dataQuotation = JSON.parse(localStorage.getItem('data_quotation_'+quotationId+userId));
+        let productQuotations = JSON.parse(localStorage.getItem('product_quotation_'+quotationId+userId));
 
         // Tambahkan CSRF token agar Laravel dapat memverifikasi request
         let csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -1375,18 +1491,17 @@ $(document).ready(function() {
         console.log(dataToSend);
         // Lakukan request AJAX POST
         $.ajax({
-            url: "{{ route('quotation.store') }}", // Route untuk menambah quotation
-            type: "POST",
+            url: "{{ route('quotation.update', $quotation->id) }}", // Route untuk menambah quotation
+            type: "PUT",
             data: dataToSend,
             success: function(response) {
                 if (response.success) {
-                    localStorage.removeItem('data_quotation_'+userId);
-                    localStorage.removeItem('product_quotation_'+userId);
                     // Menampilkan toast sukses
                     Toast.fire({
                         icon: 'success',
                         title: response.message // Pesan sukses dari response JSON
                     });
+                    resetLocal();
                     window.location.href = "{{ route('quotation.index') }}";
                 } else {
                     // Menampilkan toast sukses
@@ -1406,7 +1521,8 @@ $(document).ready(function() {
         });
     });
 
-    setDataProduct();
+    setProductQuotation();
+    setDataQuotation();
     // Render product list saat halaman dimuat
     renderProductList();
 });

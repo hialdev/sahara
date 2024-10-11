@@ -2,6 +2,7 @@
 @extends('layouts.app')
 @section('css')
 <link rel="stylesheet" href="/dist/assets/extensions/filepond/filepond.css">
+<link rel="stylesheet" href="/dist/assets/compiled/css/filepond-pdf-preview.css">
 <link rel="stylesheet" href="/dist/assets/extensions/flatpickr/flatpickr.min.css">
 <link rel="stylesheet" href="/dist/assets/extensions/filepond-plugin-image-preview/filepond-plugin-image-preview.css">
 <link rel="stylesheet" href="/dist/assets/extensions/choices.js/public/assets/styles/choices.css">

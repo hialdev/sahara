@@ -3,7 +3,7 @@
         <div class="sidebar-header position-relative">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="logo">
-                    <a href="{{url('/')}}"><img src="/images/devtektiflogo.jpeg" alt="Logo" style="height: 1.5em; border-radius:99px; object-fit:cover;"></a>
+                    <a href="{{url('/')}}"><img src="{{env('SSO_URL').'/storage/'.setting('site_logo')}}" alt="Logo" style="height: 1.5em; border-radius:99px; object-fit:cover;"></a>
                 </div>
                 <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
@@ -133,14 +133,11 @@
                     
                     <ul class="submenu ">
                         <li class="submenu-item  ">
-                            <a href="" class="submenu-link">Add New</a>
+                            <a href="{{route('purchase.index')}}" class="submenu-link">All Purchase</a>
                         </li>
                         <li class="submenu-item  ">
-                            <a href="" class="submenu-link">All PO</a>
-                        </li>
-                        <li class="submenu-item  ">
-                            <a href="" class="submenu-link">Add PO to Principle</a>
-                        </li>
+                            <a href="{{route('purchase.add')}}" class="submenu-link">Manage Purchase Order</a>
+                          </li>
                     </ul>
                 </li>
                 <li

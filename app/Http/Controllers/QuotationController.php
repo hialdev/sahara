@@ -6,6 +6,7 @@ use App\Models\Client;
 use App\Models\Product;
 use App\Models\Quotation;
 use App\Models\Satuan;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,53 +25,79 @@ class QuotationController extends Controller
         return view('quotation.add', compact('clients', 'satuans', 'products'));
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
+        // Validasi input
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'email' => 'required|email',
-            'address' => 'required',
-            'city' => 'required',
-            'postal_code' => 'required|numeric',
-            'fax' => 'nullable|numeric',
-            'telp' => 'nullable|numeric',
-            'contact_name' => 'required',
-            'contact_email' => 'required',
-            'contact_phone' => 'required',
+            'date' => 'nullable|string',
+            'client' => 'required',
+            'for' => 'required|string',
+            'message' => 'required|string',
+            'keterangan' => 'required|string',
+            'products' => 'required|json', // Validasi bahwa ini adalah JSON string
         ]);
 
         if ($validator->fails()) {
             // Menggabungkan semua pesan kesalahan menjadi satu teks
             $errorMessages = $validator->errors()->all();
             $errorMessageText = implode(' ', $errorMessages);
-        
+            
+            // Jika request adalah AJAX, kembalikan respons JSON
+            if ($request->ajax()) {
+                return response()->json(['success' => false, 'error' => $errorMessageText]);
+            }
+            
+            // Untuk request biasa, redirect dengan pesan error
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput()
                 ->with('warning', $errorMessageText);
         }
 
-        // Handle file upload
-        $imagePath = '';
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('quotations', 'public');
+        // Decode products dari JSON menjadi array
+        $products = json_decode($request->products, true);
+
+        // Jika decoding gagal, kembalikan pesan error
+        if ($products === null) {
+            if ($request->ajax()) {
+                return response()->json(['success' => false, 'error' => 'Invalid products data format.']);
+            }
+            
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Invalid products data format.');
         }
 
+        // Generate nomor surat
+        $no_surat = Quotation::generateNomorSurat();
+        
         try {
-            // Create new quotation
+            // Simpan quotation baru
             $quotation = Quotation::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'description' => $request->description,
-                'contact_name' => $request->contact_name,
-                'contact_email' => $request->contact_email,
-                'contact_phone' => $request->contact_phone,
+                'no' => $no_surat,
+                'date' => $request->date,
+                'client_id' => $request->client,
+                'for' => $request->for,
+                'message' => $request->message,
+                'keterangan' => $request->keterangan,
+                'products' => json_encode($products), // Simpan sebagai JSON ke database
+                'status' => '0', // 0 -> offering, 1 -> purchased, 2 -> closed
             ]);
-            
 
+            // Jika request adalah AJAX, kembalikan response JSON
+            if ($request->ajax()) {
+                return response()->json(['success' => true, 'message' => 'Quotation created successfully.']);
+            }
+
+            // Untuk request biasa, redirect ke halaman index dengan pesan sukses
             return redirect()->route('quotation.index')
-                ->with('success', 'quotation created successfully.');
+                ->with('success', 'Quotation created successfully.');
         } catch (\Exception $e) {
+            // Jika terjadi error, tangani sesuai dengan jenis request (AJAX atau non-AJAX)
+            if ($request->ajax()) {
+                return response()->json(['success' => false, 'error' => 'Gagal membuat quotation, error: ' . $e->getMessage()]);
+            }
+
             return redirect()->back()->withInput()
                 ->with('error', 'Gagal membuat quotation, error: ' . $e->getMessage());
         }
@@ -78,48 +105,84 @@ class QuotationController extends Controller
 
     public function edit($id){
         $quotation = Quotation::findOrFail($id);
-        return view('quotation.edit', compact('quotation'));
+        $satuans = Satuan::all();
+        $products = Product::all();
+        $clients = Client::all();
+        return view('quotation.edit', compact('clients', 'satuans', 'products', 'quotation'));
     }
 
-    public function update($id, Request $request){
+    public function update($id, Request $request)
+    {
+        // Validasi input
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'description' => 'nullable|string',
-            'contact_name' => 'required|string',
-            'contact_email' => 'required|email',
-            'contact_phone' => 'required|numeric',
+            'date' => 'nullable|string',
+            'client' => 'required',
+            'for' => 'required|string',
+            'message' => 'required|string',
+            'keterangan' => 'required|string',
+            'products' => 'required|json', // Validasi bahwa ini adalah JSON string
         ]);
 
         if ($validator->fails()) {
             // Menggabungkan semua pesan kesalahan menjadi satu teks
             $errorMessages = $validator->errors()->all();
             $errorMessageText = implode(' ', $errorMessages);
-        
+            
+            // Jika request adalah AJAX, kembalikan respons JSON
+            if ($request->ajax()) {
+                return response()->json(['success' => false, 'error' => $errorMessageText]);
+            }
+            
+            // Untuk request biasa, redirect dengan pesan error
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput()
                 ->with('warning', $errorMessageText);
         }
 
-        $quotation = Quotation::findOrFail($id);
+        // Decode products dari JSON menjadi array
+        $products = json_decode($request->products, true);
+
+        // Jika decoding gagal, kembalikan pesan error
+        if ($products === null) {
+            if ($request->ajax()) {
+                return response()->json(['success' => false, 'error' => 'Invalid products data format.']);
+            }
+            
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Invalid products data format.');
+        }
 
         try {
-            // Create new quotation
+            $quotation = Quotation::find($id);
+            // Simpan quotation baru
             $quotation->update([
-                'name' => $request->name ?? $quotation->name,
-                'email' => $request->email ?? $quotation->email,
-                'description' => $request->description ?? $quotation->description,
-                'contact_name' => $request->contact_name ?? $quotation->contact_name,
-                'contact_email' => $request->contact_email ?? $quotation->contact_email,
-                'contact_phone' => $request->contact_phone ?? $quotation->contact_phone,
+                'date' => $request->date,
+                'client_id' => $request->client,
+                'for' => $request->for,
+                'message' => $request->message,
+                'keterangan' => $request->keterangan,
+                'products' => json_encode($products), // Simpan sebagai JSON ke database
+                'status' => '0', // 0 -> offering, 1 -> purchased, 2 -> closed
             ]);
-                
+
+            // Jika request adalah AJAX, kembalikan response JSON
+            if ($request->ajax()) {
+                return response()->json(['success' => true, 'message' => 'Quotation updated successfully.']);
+            }
+
+            // Untuk request biasa, redirect ke halaman index dengan pesan sukses
             return redirect()->route('quotation.index')
-                ->with('success', 'quotation updated successfully.');
+                ->with('success', 'Quotation updated successfully.');
         } catch (\Exception $e) {
+            // Jika terjadi error, tangani sesuai dengan jenis request (AJAX atau non-AJAX)
+            if ($request->ajax()) {
+                return response()->json(['success' => false, 'error' => 'Gagal update quotation, error: ' . $e->getMessage()]);
+            }
+
             return redirect()->back()->withInput()
-                ->with('error', 'Gagal memperbarui quotation, error: ' . $e->getMessage());
+                ->with('error', 'Gagal update quotation, error: ' . $e->getMessage());
         }
     }
 
@@ -132,5 +195,21 @@ class QuotationController extends Controller
             return redirect()->back()->withInput()
                 ->with('error', 'Gagal menghapus quotation, error: ' . $e->getMessage());
         }
+    }
+
+    public function print($id){
+        $quotation = Quotation::findOrFail($id);
+        
+        return view('quotation.print', compact('quotation'));
+    }
+
+    public function download($id){
+        $quotation = Quotation::findOrFail($id);
+        $pdf = Pdf::setOption(['defaultFont' => 'serif'])->loadView('quotation.pdf', [
+            'title' => 'Quotation Sahara No '.$quotation->no,
+            'quotation' => $quotation
+        ]);
+    
+        return $pdf->download('quotation-'.$quotation->no.'.pdf');
     }
 }

@@ -19,10 +19,11 @@ class Osano2 extends Migration
             $table->date('date');
             $table->uuid('client_id');
             $table->string('for');
+            $table->string('perihal');
             $table->text('message');
             $table->text('keterangan');
             $table->json('products');
-            $table->enum('status', [0, 1, 2])->default(0); // Status : 0 -> offering, 1 -> purchased, 3 -> canceled 
+            $table->enum('status', [0, 1, 2])->default(0); // Status : 0 -> offering, 1 -> purchased, 2 -> closed 
             $table->timestamps();
 
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
@@ -31,11 +32,11 @@ class Osano2 extends Migration
         Schema::connection($this->connection())->create('purchase_orders', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('no');
+            $table->string('date');
             $table->text('po_number');
             $table->uuid('client_id');
             $table->uuid('quotation_id');
             $table->string('po_file');
-            $table->json('products');
             $table->enum('status', [0, 1, 2, 3])->default(0); // Status : 0 -> waiting, 1 -> delivered, 2 -> waiting delivery, 3 -> finished 
             $table->text('description')->nullable();
             $table->timestamps();
@@ -47,7 +48,6 @@ class Osano2 extends Migration
         Schema::connection($this->connection())->create('process_purchase_orders', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('purchase_order_id');
-            $table->json('products');
             $table->uuid('principle_id');
             $table->boolean('is_logistic_in_sahara')->default(1);
             $table->uuid('logistic_id')->nullable();

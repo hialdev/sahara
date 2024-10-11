@@ -6,7 +6,9 @@ use App\Http\Controllers\LogisticController;
 use App\Http\Controllers\PackagingController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PrincipleController;
+use App\Http\Controllers\ProcessPurchaseController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\SatuanController;
 use App\Models\Quotation;
@@ -29,10 +31,16 @@ Route::middleware(['sso.login'])->group(function () {
     Route::prefix('ajax')->group(function (){
         Route::get('/satuan', [AJAXController::class, 'getSatuans']);
         Route::get('/client', [AJAXController::class, 'getClients']);
+        Route::get('/client/{id}', [AJAXController::class, 'getClientDetails']);
         Route::get('/product', [AJAXController::class, 'getProducts']);
+        Route::get('/packaging', [AJAXController::class, 'getPackagings']);
         Route::post('/product/add', [AJAXController::class, 'storeProduct']);
         Route::get('/product/{id}', [AJAXController::class, 'getProductDetails']);
         Route::get('/packaging/satuan/{satuan_id}', [AJAXController::class, 'getPackagingBySatuan']);
+        // Quotation
+        Route::get('/quotation', [AJAXController::class, 'getQuotations']);
+        Route::get('/quotation/client/{client_id}', [AJAXController::class, 'getQuotationClient']);
+        Route::get('/quotation/{id}', [AJAXController::class, 'getQuotationDetails']);
     });
 
     Route::get('/', [PageController::class, 'dashboard'])->name('dashboard');
@@ -86,8 +94,27 @@ Route::middleware(['sso.login'])->group(function () {
     Route::get('/quotation/add', [QuotationController::class, 'add'])->name('quotation.add');
     Route::post('/quotation/add', [QuotationController::class, 'store'])->name('quotation.store');
     Route::get('/quotation/{id}/edit', [QuotationController::class, 'edit'])->name('quotation.edit');
+    Route::get('/quotation/{id}/print', [QuotationController::class, 'print'])->name('quotation.print');
+    Route::get('/quotation/{id}/download', [QuotationController::class, 'download'])->name('quotation.download');
     Route::put('/quotation/{id}/edit', [QuotationController::class, 'update'])->name('quotation.update');
     Route::delete('/quotation/{id}/destroy', [QuotationController::class, 'destroy'])->name('quotation.destroy');
+
+    // Purchase Order
+    // -- from Client
+    Route::get('/purchase', [PurchaseOrderController::class, 'index'])->name('purchase.index');
+    Route::get('/purchase/add', [PurchaseOrderController::class, 'add'])->name('purchase.add');
+    Route::post('/purchase/add', [PurchaseOrderController::class, 'store'])->name('purchase.store');
+    Route::get('/purchase/{id}', [PurchaseOrderController::class, 'show'])->name('purchase.show');
+    Route::get('/purchase/{id}/edit', [PurchaseOrderController::class, 'edit'])->name('purchase.edit');
+    Route::put('/purchase/{id}/edit', [PurchaseOrderController::class, 'update'])->name('purchase.update');
+    Route::delete('/purchase/{id}/destroy', [PurchaseOrderController::class, 'destroy'])->name('purchase.destroy');
+    // -- Principle
+    Route::get('/purchase/{id}/process', [ProcessPurchaseController::class, 'index'])->name('purchase.process.index');
+    Route::get('/purchase/{id}/process/add', [ProcessPurchaseController::class, 'add'])->name('purchase.process.add');
+    Route::post('/purchase/{id}/process/add', [ProcessPurchaseController::class, 'store'])->name('purchase.process.store');
+    Route::get('/purchase/{id}/process/{process_id}/edit', [ProcessPurchaseController::class, 'edit'])->name('purchase.process.edit');
+    Route::put('/purchase/{id}/process/{process_id}/edit', [ProcessPurchaseController::class, 'update'])->name('purchase.process.update');
+    Route::delete('/purchase/{id}/process/{process_id}/destroy', [ProcessPurchaseController::class, 'destroy'])->name('purchase.process.destroy');
 
     // Packaging
     Route::get('/packaging', [PackagingController::class, 'index'])->name('packaging.index');

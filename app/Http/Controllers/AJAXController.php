@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\ClientAddress;
 use App\Models\Packaging;
 use App\Models\Product;
+use App\Models\Quotation;
 use App\Models\Satuan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -88,6 +90,14 @@ class AJAXController extends Controller
         $satuans = Satuan::all();
         return response()->json($satuans);
     }
+    
+    // ---------------------------------------
+    // ------------- Satuan -----------------
+    // ---------------------------------------
+    public function getPackagings(){
+        $packagings = Packaging::all();
+        return response()->json($packagings);
+    }
 
     // ---------------------------------------
     // ------------- Client -----------------
@@ -95,5 +105,41 @@ class AJAXController extends Controller
     public function getClients(){
         $clients = Client::all();
         return response()->json($clients);
+    }
+
+    public function getClientDetails($id)
+    {
+        $client = Client::findOrFail($id);
+        $address = ClientAddress::where('client_id', $client->id)->where('address_tag', 'office')->first();
+        $response = (object) [
+            "name" => $client->name,
+            "npwp" => $client->npwp,
+            "email" => $client->email,
+            "contact_name" => $client->contact_name,
+            "contact_email" => $client->contact_email,
+            "contact_phone" => $client->contact_phone,
+            "address" => [
+                "address" => $address->address,
+                "city" => $address->city,
+                "postal_code" => $address->postal_code,
+            ],
+        ];
+        return response()->json($response);
+    }
+
+    // ---------------------------------------
+    // ------------- Product -----------------
+    // ---------------------------------------
+    public function getQuotations(){
+        $quotations = Quotation::all();
+        return response()->json($quotations);
+    }
+    public function getQuotationDetails($id){
+        $quotation = Quotation::findOrFail($id);
+        return response()->json($quotation);
+    }
+    public function getQuotationClient($client_id){
+        $quotation = Quotation::where('client_id', $client_id)->get();
+        return response()->json($quotation);
     }
 }

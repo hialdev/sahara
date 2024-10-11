@@ -102,6 +102,7 @@
                                         </div>
                                         <div>
                                             <div class="fw-semibold">{{$client->name}}</div>
+                                            <div style="font-size:12px" class="text-secondary">NPWP : {{$client->npwp}}</div>
                                             <div style="font-size:12px" class="text-secondary">{{$client->email}}</div>
                                         </div>
                                     </div>

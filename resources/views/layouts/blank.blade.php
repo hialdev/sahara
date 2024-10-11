@@ -17,55 +17,13 @@
     <link rel="stylesheet" crossorigin href="/dist/assets/compiled/css/app.css">
     <link rel="stylesheet" crossorigin href="/dist/assets/compiled/css/app-dark.css">
     <link rel="stylesheet" crossorigin href="/dist/assets/compiled/css/iconly.css">
-    <style>
-        .tox .tox-editor-header{
-            z-index: auto !important;
-        }
-    </style>
 </head>
 
-<body>
+<body class="bg-white">
     <script src="/dist/assets/static/js/initTheme.js"></script>
     <div id="app">
-        @include('partials.sidebar')
-        <div id="main">
-            <div class="d-flex mb-4 align-items-center justify-content-between">
-                <header class="mb-3">
-                    <a href="#" class="burger-btn d-block d-xl-none">
-                        <i class="bi bi-justify fs-3"></i>
-                    </a>
-                </header>
-                @php
-                    $user = Auth::user();
-                @endphp
-                <div class="dropdown">
-                    <a href="#" id="topbarUserDropdown" class="user-dropdown d-flex align-items-center dropend dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="false">
-                        <div class="avatar avatar-lg" style="background: #f0f0f0">
-                            <img src="{{env('SSO_URL').'/storage'.'/'.$user->image}}" alt="{{$user->name}} Photo Profile">
-                        </div>
-                        <div class="text">
-                            <h6 class="user-dropdown-name">{{$user->name}}</h6>
-                            <p class="user-dropdown-status text-sm text-muted">{{$user->roles[0]->name}}</p>
-                        </div>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end shadow-lg" aria-labelledby="topbarUserDropdown">
-                        <li>
-                            <a href="{{env('ACCOUNT_URL')}}/my" class="dropdown-item">My Account</a>
-                        </li>
-                        <li>
-                            <form action="http://account.sahara.test/logout" method="POST">
-                                @csrf
-                                <button type="submit" class="dropdown-item text-danger">Logout</button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            
+        <div class="container py-3">
             @yield('content')
-
-            @include('partials.footer')
         </div>
     </div>
     <script src="/dist/assets/static/js/components/dark.js"></script>
