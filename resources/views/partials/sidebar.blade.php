@@ -3,7 +3,7 @@
         <div class="sidebar-header position-relative">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="logo">
-                    <a href="{{url('/')}}"><img src="/images/devtektiflogo.jpeg" alt="Logo" style="height: 1.5em; border-radius:99px; object-fit:cover;"></a>
+                    <a href="{{url('/')}}"><img src="{{env('SSO_URL').'/storage/'.setting('site_logo')}}" alt="Logo" style="height: 1.5em; border-radius:10px; object-fit:contain;"></a>
                 </div>
                 <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
@@ -40,8 +40,6 @@
         </div>
         <div class="sidebar-menu">
             <ul class="menu">
-                <li class="sidebar-title">Menu</li>
-                
                 <li
                     class="sidebar-item {{Route::is('dashboard') || Route::is('home') ? 'active': ''}} ">
                     <a href="{{url('/')}}" class='sidebar-link'>

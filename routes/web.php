@@ -17,12 +17,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Halaman login
-Route::get('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/login', [AuthController::class, 'submitLogin'])->name('login.submit');
 
 // Halaman logout
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+// Halaman login
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login', [AuthController::class, 'submitLogin'])->name('login.password');
+Route::get('/login/otp', [AuthController::class, 'otp'])->name('login.otp');
+Route::post('/login/otp', [AuthController::class, 'submitOtp'])->name('login.otp');
+Route::post('/login/email', [AuthController::class, 'withEmail'])->name('login.email');
+Route::post('/login/phone', [AuthController::class, 'withPhone'])->name('login.phone');
 
 // Dashboard setelah login
 Route::middleware(['auth'])->group(function () {
@@ -31,8 +35,11 @@ Route::middleware(['auth'])->group(function () {
     
     // Rute lain untuk pengaturan akun
     Route::get('/my', [ProfileController::class, 'index'])->name('profile.index');
-    Route::post('/profile/verifikasi', [ProfileController::class, 'verifikasi'])->name('verifikasi.send');
-    Route::get('/profile/open-the-door-we-look-at-you', [ProfileController::class, 'otp'])->name('verifikasi.otp');
+    Route::post('/profile/change', [ProfileController::class, 'change'])->name('profile.change');
+    Route::get('/profile/verifikasi', [ProfileController::class, 'verifikasi'])->name('verifikasi.index');
+    Route::post('/profile/verifikasi/email', [ProfileController::class, 'verifikasiEmail'])->name('verifikasi.email');
+    Route::post('/profile/verifikasi/phone', [ProfileController::class, 'verifikasiPhone'])->name('verifikasi.phone');
+    Route::post('/profile/verifikasi/submit', [ProfileController::class, 'submitVerifikasi'])->name('verifikasi.send');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/edit', [ProfileController::class, 'update'])->name('profile.update');
 });
