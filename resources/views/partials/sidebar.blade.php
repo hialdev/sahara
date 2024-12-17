@@ -3,7 +3,7 @@
         <div class="sidebar-header position-relative">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="logo">
-                    <a href="{{url('/')}}"><img src="/images/devtektiflogo.jpeg" alt="Logo" style="height: 1.5em; border-radius:99px; object-fit:cover;"></a>
+                    <a href="{{url('/')}}"><img src="{{asset('storage/'. setting('site_logo'))}}" alt="Logo" style="height: 1.5em; max-width:3em; object-fit:contain;"></a>
                 </div>
                 <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
@@ -71,7 +71,20 @@
                         </li>
                     </ul>
                 </li>
-                
+                <li
+                    class="sidebar-item {{Route::is('setting*') ? 'active' : ''}}">
+                    <a href="{{route('setting.index')}}" class='sidebar-link'>
+                        <i class="bi bi-gear-fill"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+                <li
+                    class="sidebar-item {{Route::is('whatsapp*') ? 'active' : ''}}">
+                    <a href="{{route('whatsapp.index')}}" class='sidebar-link'>
+                        <i class="bi bi-whatsapp"></i>
+                        <span>Whatsapp OTP</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

@@ -3,9 +3,11 @@
 namespace App\Http\Middleware;
 
 use App\Models\ActiveLogin;
+use App\Models\Role;
 use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -33,12 +35,17 @@ class CheckSSOLogin
                 ->where('created_at', '>=', Carbon::now()->subDays(7))
                 ->first();
 
-                // Debugging: lihat apakah activeLogin ditemukan
-                Log::info('ActiveLogin ditemukan: ' . ($activeLogin ? 'Ya' : 'Tidak'));
+            // Debugging: lihat apakah activeLogin ditemukan
+            Log::info('ActiveLogin ditemukan: ' . ($activeLogin ? 'Ya' : 'Tidak'));
+            $roleName = Auth::user()->getRoleNames()[0];
+            $role = Role::where('name', $roleName)->first();
+            $checkApp = $role->applications->contains('id', env('APP_ID'));
 
-            if ($activeLogin) {
+            if ($activeLogin && $checkApp) {
                 // Jika valid, lanjutkan request
                 return $next($request);
+            }else{
+                return redirect()->away(env('ACCOUNT_URL'));
             }
         }
         

@@ -3,7 +3,9 @@
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WhatsappController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,4 +44,14 @@ Route::middleware(['sso.login'])->group(function () {
     Route::put('/user/{id}/edit', [UserController::class, 'update'])->name('user.update');
     Route::delete('/user/{id}/destroy', [UserController::class, 'destroy'])->name('user.destroy');
     
+    Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
+    Route::post('/setting/add', [SettingController::class, 'store'])->name('setting.store');
+    Route::post('/setting/group/add', [SettingController::class, 'addGroup'])->name('setting.group.add');
+    Route::put('/setting/group/{id}/update', [SettingController::class, 'updateGroup'])->name('setting.group.update');
+    Route::delete('/setting/group/{id}/destroy', [SettingController::class, 'destroyGroup'])->name('setting.group.destroy');
+    Route::put('/setting/{id}/edit', [SettingController::class, 'update'])->name('setting.update');
+    Route::put('/setting/{id}/clear', [SettingController::class, 'clearFile'])->name('setting.clear');
+    Route::delete('/setting/{id}/destroy', [SettingController::class, 'destroy'])->name('setting.destroy');
+
+    Route::get('/whatsapp', [WhatsappController::class, 'index'])->name('whatsapp.index');
 });
