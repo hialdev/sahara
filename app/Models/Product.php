@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class Product extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+
     protected $connection = "osano";
 
     protected $fillable = ['title', 'description', 'id_satuan_barang'];
@@ -31,4 +34,9 @@ class Product extends Model
     public function satuan(){
         return $this->hasOne(Satuan::class, 'id', 'id_satuan_barang');
     }    
+
+    public function purchaseOrders()
+    {
+        return $this->belongsToMany(PurchaseOrder::class, 'purchase_order_products', 'product_id', 'purchase_order_id');
+    }
 }

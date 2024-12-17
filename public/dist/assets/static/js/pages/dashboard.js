@@ -142,6 +142,8 @@ var chartVisitorsProfile = new ApexCharts(
   document.getElementById("chart-visitors-profile"),
   optionsVisitorsProfile
 )
+chartVisitorsProfile.render()
+
 var chartEurope = new ApexCharts(
   document.querySelector("#chart-europe"),
   optionsEurope
@@ -164,4 +166,3 @@ chartAmerica.render()
 chartIndia.render()
 chartEurope.render()
 chartProfileVisit.render()
-chartVisitorsProfile.render()

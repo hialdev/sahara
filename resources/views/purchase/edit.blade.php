@@ -1,7 +1,7 @@
-@extends('templates.crud.add', ['routeName'=>'quotation'])
+@extends('templates.crud.add', ['routeName'=>'purchase'])
 
-@section('title', 'Edit Quotation : '.$quotation->no)
-@section('description', 'Edit Quotation for '.$quotation->client->name)
+@section('title', 'Edit purchase : '.$purchase->no)
+@section('description', 'Edit purchase for '.$purchase->client->name)
 
 @section('form')
     <style>
@@ -22,7 +22,7 @@
             Reset Edit
         </button>
         <button type="button" class="btn btn-sm btn-danger d-flex align-items-center gap-2" data-bs-toggle="modal"
-            data-bs-target="#danger-{{$quotation->id}}">
+            data-bs-target="#danger-{{$purchase->id}}">
             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                 <path fill="currentColor" d="m20.37 8.91l-1 1.73l-12.13-7l1-1.73l3.04 1.75l1.36-.37l4.33 2.5l.37 1.37zM6 19V7h5.07L18 11v8a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2" />
             </svg>
@@ -30,7 +30,7 @@
         </button>
     </div>
 
-    <form action="{{route('quotation.store')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('purchase.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row">
             <div class="col-md-12">
@@ -40,7 +40,7 @@
                         <div class="position-sticky top-0 pt-2" style="z-index: 999">
                             <div class="row">
                                 <div class="col-6">
-                                    <div class="btn-content btn-content-quotation-data d-flex align-items-center bg-white p-3 shadow-sm rounded-4 gap-3 mb-3" style="cursor: pointer;">
+                                    <div class="btn-content btn-content-purchase-data d-flex align-items-center bg-white p-3 shadow-sm rounded-4 gap-3 mb-3" style="cursor: pointer;">
                                         <div class="d-flex align-items-center justify-content-center p-2" style="aspect-ratio:1/1">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24">
                                                 <path fill="currentColor" d="m21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42M5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4S7 4.67 7 5.5S6.33 7 5.5 7" />
@@ -53,7 +53,7 @@
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                    <div class="btn-content btn-content-quotation-product d-flex align-items-center bg-white justify-content-end p-3 shadow-sm rounded-4 gap-3 mb-3" style="cursor: pointer;">
+                                    <div class="btn-content btn-content-purchase-product d-flex align-items-center bg-white justify-content-end p-3 shadow-sm rounded-4 gap-3 mb-3" style="cursor: pointer;">
                                         <div class="text-end">
                                             <h6 class="m-0"><span class="d-none d-sm-inline-block">Offering</span> Product</h6>
                                             <p class="text-secondary m-0 d-none d-md-block ">Pilih atau Isi Product yang akan ditawarkan</p>
@@ -68,19 +68,19 @@
                             </div>
                         </div>
 
-                        {{-- Quotation Data --}}
-                        <div class="content-quotation-data active" style="display: none">
+                        {{-- purchase Data --}}
+                        <div class="content-purchase-data active" style="display: none">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="no" class="form-label">No. Quotation (Automatic)</label>
-                                        <input type="text" id="no" name="no" class="form-control" placeholder="No. Quotation" value="{{$quotation->no}}" disabled id="name" value="{{ old('name') }}" required>
+                                        <label for="no" class="form-label">No. purchase (Automatic)</label>
+                                        <input type="text" id="no" name="no" class="form-control" placeholder="No. purchase" value="{{$purchase->no}}" disabled id="name" value="{{ old('name') }}" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="name" class="form-label">Date Letter <span class="text-danger">*</span></label>
-                                        <input type="date" name="date" id="date" class="form-control mb-3 flatpickr-no-config" placeholder="Select date.." value="{{$quotation->date}}" required>
+                                        <input type="date" name="date" id="date" class="form-control mb-3 flatpickr-no-config" placeholder="Select date.." value="{{$purchase->date}}" required>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -89,7 +89,7 @@
                                         <select id="client" name="client" class="form-select" required>
                                             <option value="">Pilih Client</option>
                                             @forelse ($clients as $client)
-                                            <option value="{{$client->id}}" {{$client->id == $quotation->client->id ? 'selected' : ''}}>{{$client->name}}</option>
+                                            <option value="{{$client->id}}" {{$client->id == $purchase->client->id ? 'selected' : ''}}>{{$client->name}}</option>
                                             @empty
                                             <option value="">Tidak ada client tersedia</option>
                                             @endforelse
@@ -127,25 +127,25 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="Untuk Perhatian" class="mb-2">Untuk Perhatian <span class="text-danger">*</span></label>
-                                        <input type="text" id="for" name="for" class="form-control" placeholder="Bpk / Ibu / Pimpinan" value="{{old('for', $quotation->for)}}">
+                                        <input type="text" id="for" name="for" class="form-control" placeholder="Bpk / Ibu / Pimpinan" value="{{old('for', $purchase->for)}}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="perihal" class="mb-2">Perihal <span class="text-danger">*</span></label>
-                                        <input type="text" id="perihal" name="perihal" class="form-control" required placeholder="Default : Penawaran Harga" value="{{ old('perihal', $quotation->perihal)}}">
+                                        <input type="text" id="perihal" name="perihal" class="form-control" required placeholder="Default : Penawaran Harga" value="{{ old('perihal', $purchase->perihal)}}">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="message" class="form-label">Pesan <span class="text-danger">*</span></label>
-                                        <textarea id="altiny" cols="30" rows="5" name="message" required>{{old('message', $quotation->message)}}</textarea>
+                                        <textarea id="altiny" cols="30" rows="5" name="message" required>{{old('message', $purchase->message)}}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="keterangan" class="form-label">keterangan</label>
-                                        <textarea id="keterangan" cols="30" rows="5" name="keterangan">{{old('keterangan', $quotation->keterangan)}}</textarea>
+                                        <textarea id="keterangan" cols="30" rows="5" name="keterangan">{{old('keterangan', $purchase->keterangan)}}</textarea>
                                     </div>
                                 </div>
                                 {{-- Submit Button --}}
@@ -155,8 +155,8 @@
                             </div>
                         </div>
 
-                        {{-- Quotation Product Add --}}
-                        <div class="content-quotation-product" style="display: none">
+                        {{-- purchase Product Add --}}
+                        <div class="content-purchase-product" style="display: none">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="d-flex align-items-center justify-content-between mb-3">
@@ -238,7 +238,7 @@
             <div class="modal-body border-0 py-0">
                 <div class="content-tab">
                     {{-- Tab Add By Select Product --}}
-                    <div class="form-quotation">
+                    <div class="form-purchase">
                         <div class="row">
                             <div class="col-12">
                                 <div class="mb-3">
@@ -295,7 +295,7 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16">
                                             <path fill="currentColor" fill-rule="evenodd" d="M5.841 5.28a.75.75 0 0 0-1.06-1.06L1.53 7.47L1 8l.53.53l3.25 3.25a.75.75 0 0 0 1.061-1.06l-1.97-1.97H14.25a.75.75 0 0 0 0-1.5H3.871z" clip-rule="evenodd" />
                                         </svg>
-                                        Back to Add Quotation Product
+                                        Back to Add purchase Product
                                     </button>
                                 </div>
                                 <div class="col-md-12">
@@ -344,7 +344,7 @@
                 <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
                     <span>Close</span>
                 </button>
-                <button type="button" id="addQuotationProduct" class="btn btn-primary">Add Quotation Product</button>
+                <button type="button" id="addpurchaseProduct" class="btn btn-primary">Add purchase Product</button>
             </div>
         </div>
     </div>
@@ -362,7 +362,7 @@
             <div class="modal-body">
                 <form id="editProductForm">
                     {{-- Tab Add By Select Product --}}
-                    <div class="form-quotation">
+                    <div class="form-purchase">
                         <div class="row">
                             <div class="col-12">
                                 <div class="mb-3">
@@ -403,7 +403,7 @@
                 <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
                     <span>Close</span>
                 </button>
-                <button type="button" id="editQuotationProduct" class="btn btn-primary">Update Quotation Product</button>
+                <button type="button" id="editpurchaseProduct" class="btn btn-primary">Update purchase Product</button>
             </div>
         </div>
     </div>
@@ -454,13 +454,13 @@
                             <div class="p-1">
                                 <table class="mb-2 w-100">
                                     <tr>
-                                        <td width="60">Nomor</td><td width="10" class="pl-1 pr-1">:</td><td>{{$quotation->no}}</td>
+                                        <td width="60">Nomor</td><td width="10" class="pl-1 pr-1">:</td><td>{{$purchase->no}}</td>
                                     </tr>
                                     <tr>
                                         <td width="60">Lampiran</td><td width="10" class="pl-1 pr-1">:</td><td>-</td>
                                     </tr>
                                     <tr>
-                                        <td width="60">Perihal</td><td width="10" class="pl-1 pr-1">:</td><td><span class="previewPerihal">{{$quotation->perihal}}</span></td>
+                                        <td width="60">Perihal</td><td width="10" class="pl-1 pr-1">:</td><td><span class="previewPerihal">{{$purchase->perihal}}</span></td>
                                     </tr>
                                     <tr>
                                         <td width="60" class="align-top">Kepada</td>
@@ -583,9 +583,9 @@
                         data-bs-dismiss="modal">
                         <span class="">Close</span>
                     </button>
-                    <button id="saveQuotation" type="button" class="btn btn-primary ms-1 rounded-pill"
+                    <button id="savepurchase" type="button" class="btn btn-primary ms-1 rounded-pill"
                         data-bs-dismiss="modal">
-                        <span class="">Save Quotation</span>
+                        <span class="">Save purchase</span>
                     </button>
                 </div>
             </div>
@@ -594,7 +594,7 @@
 </div>
 
 {{-- Modal Delete --}}
-<div class="modal fade text-left" id="danger-{{$quotation->id}}" tabindex="-1" role="dialog"
+<div class="modal fade text-left" id="danger-{{$purchase->id}}" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel120" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
         role="document">
@@ -607,7 +607,7 @@
                 </button>
             </div>
             <div class="modal-body border-0">
-                Apakah anda yakin menghapus data Quotation dengan nomor <span class="fw-bold">{{$quotation->no}}</span> untuk client <span class="fw-bold">{{$quotation->client->name}}</span> ? data yang dihapus bersifat permanen tidak dapat dikembalikan
+                Apakah anda yakin menghapus data purchase dengan nomor <span class="fw-bold">{{$purchase->no}}</span> untuk client <span class="fw-bold">{{$purchase->client->name}}</span> ? data yang dihapus bersifat permanen tidak dapat dikembalikan
             </div>
             <div class="modal-footer border-0">
                 <button type="button" class="btn btn-light-secondary"
@@ -615,7 +615,7 @@
                     <i class="bx bx-x d-block d-sm-none"></i>
                     <span class="d-none d-sm-block">Batal</span>
                 </button>
-                <form action="{{route('quotation.destroy', $quotation->id)}}" method="POST">
+                <form action="{{route('purchase.destroy', $purchase->id)}}" method="POST">
                     @csrf
                     @method('delete')
                     <button type="submit" class="btn btn-danger ms-1"
@@ -715,49 +715,49 @@ document.addEventListener("DOMContentLoaded", () => {
 flatpickr('.flatpickr-no-config', {
     enableTime: false,
     dateFormat: "d M Y", 
-    defaultDate: new Date("{{$quotation->date}}"),
+    defaultDate: new Date("{{$purchase->date}}"),
 })
 </script>
 
 <script>
 $(document).ready(function() {
     let userId = "{{$userId}}";
-    let quotationId = "{{$quotation->id}}";
-    // Pastikan content-quotation-data aktif di awal
-    $('.content-quotation-data').show();
-    $('.content-quotation-product').hide();
-    $('.btn-content-quotation-data').addClass('active');
+    let purchaseId = "{{$purchase->id}}";
+    // Pastikan content-purchase-data aktif di awal
+    $('.content-purchase-data').show();
+    $('.content-purchase-product').hide();
+    $('.btn-content-purchase-data').addClass('active');
     
     // Saat tombol "Data" diklik
-    $('.btn-content-quotation-data').click(function() {
+    $('.btn-content-purchase-data').click(function() {
         // Sembunyikan konten produk dan tampilkan konten data
-        $('.content-quotation-product').hide();
-        $('.content-quotation-data').show();
+        $('.content-purchase-product').hide();
+        $('.content-purchase-data').show();
         
         // Menambahkan class active pada tombol yang diklik
-        $('.btn-content-quotation-data').addClass('active');
-        $('.btn-content-quotation-product').removeClass('active');
+        $('.btn-content-purchase-data').addClass('active');
+        $('.btn-content-purchase-product').removeClass('active');
     });
 
     $('.btn-to-product').click(function() {
         // Sembunyikan konten data dan tampilkan konten produk
-        $('.content-quotation-data').hide();
-        $('.content-quotation-product').show();
+        $('.content-purchase-data').hide();
+        $('.content-purchase-product').show();
         
         // Menambahkan class active pada tombol yang diklik
-        $('.btn-content-quotation-product').addClass('active');
-        $('.btn-content-quotation-data').removeClass('active');
+        $('.btn-content-purchase-product').addClass('active');
+        $('.btn-content-purchase-data').removeClass('active');
     });
 
     // Saat tombol "Product" diklik
-    $('.btn-content-quotation-product').click(function() {
+    $('.btn-content-purchase-product').click(function() {
         // Sembunyikan konten data dan tampilkan konten produk
-        $('.content-quotation-data').hide();
-        $('.content-quotation-product').show();
+        $('.content-purchase-data').hide();
+        $('.content-purchase-product').show();
         
         // Menambahkan class active pada tombol yang diklik
-        $('.btn-content-quotation-product').addClass('active');
-        $('.btn-content-quotation-data').removeClass('active');
+        $('.btn-content-purchase-product').addClass('active');
+        $('.btn-content-purchase-data').removeClass('active');
     });
 
 
@@ -767,20 +767,20 @@ $(document).ready(function() {
     // Saat tombol "Data" diklik
     $('.btn-form-add-product').click(function() {
         // Sembunyikan konten produk dan tampilkan konten data
-        $('.form-quotation').hide();
+        $('.form-purchase').hide();
         $('.form-product').show();
 
-        $('.btn-submit-quotation').removeAttr("type").attr("type", "button");
-        $('.btn-submit-quotation').attr('disabled', true);
+        $('.btn-submit-purchase').removeAttr("type").attr("type", "button");
+        $('.btn-submit-purchase').attr('disabled', true);
     });
 
     $('.btn-form-back').click(function() {
         // Sembunyikan konten data dan tampilkan konten produk
         $('.form-product').hide();
-        $('.form-quotation').show();
+        $('.form-purchase').show();
 
-        $('.btn-submit-quotation').text('Add Quotation Product');
-        $('.btn-submit-quotation').attr('disabled', false);
+        $('.btn-submit-purchase').text('Add purchase Product');
+        $('.btn-submit-purchase').attr('disabled', false);
     });
 
     const clientChoices = new Choices('#client', {
@@ -996,10 +996,10 @@ $(document).ready(function() {
                     
                     
                     $('.form-product').hide();
-                    $('.form-quotation').show();
+                    $('.form-purchase').show();
 
-                    $('.btn-submit-quotation').text('Add Quotation Product');
-                    $('.btn-submit-quotation').attr('disabled', false);
+                    $('.btn-submit-purchase').text('Add purchase Product');
+                    $('.btn-submit-purchase').attr('disabled', false);
                     
                     // Reset form setelah sukses
                     $('.form-product form')[0].reset();
@@ -1031,7 +1031,7 @@ $(document).ready(function() {
         });
     });
 
-    function saveDataQuotationToLocal(){
+    function saveDatapurchaseToLocal(){
         // Ambil nilai dari form
         let date = $('#date').val();
         let client = $('#client').val();
@@ -1041,7 +1041,7 @@ $(document).ready(function() {
         let keterangan = tinymce.get('keterangan').getContent();
 
         // Object data
-        let dataQuotation = {
+        let datapurchase = {
             client: client,
             date: date,
             for: dataFor,
@@ -1050,18 +1050,18 @@ $(document).ready(function() {
             keterangan: keterangan,
         };
 
-        localStorage.setItem('data_quotation_'+quotationId+userId, JSON.stringify(dataQuotation));
+        localStorage.setItem('data_purchase_'+purchaseId+userId, JSON.stringify(datapurchase));
     }
 
     $('#savePreview').click(function(){
-        saveDataQuotationToLocal();
-        saveQuotationToLocalStorage();
+        saveDatapurchaseToLocal();
+        savepurchaseToLocalStorage();
         populatePreviewModal();
         $('#previewModal').modal('show');
     });
 
     // Fungsi untuk menyimpan atau memperbarui produk ke localStorage
-    function saveQuotationToLocalStorage(index = null) {
+    function savepurchaseToLocalStorage(index = null) {
         
         let productId = $('#product').val();
         let productTitle = $('#product option:selected').text();
@@ -1073,7 +1073,7 @@ $(document).ready(function() {
 
 
         // Buat objek produk
-        let productQuotation = {
+        let productpurchase = {
             id: productId,
             title: productTitle,
             description: description,
@@ -1082,48 +1082,48 @@ $(document).ready(function() {
             price_sale: priceSale,
             packaging: packaging,
         };
-        console.log(productQuotation);
+        console.log(productpurchase);
 
         // Ambil array dari localStorage atau buat array baru jika belum ada
-        let products = @json($quotation->products);
+        let products = @json($purchase->products);
         products = JSON.parse(products);
         
-        let quotations = JSON.parse(localStorage.getItem('product_quotation_'+quotationId+userId)) || [];
-        console.log('Quotations',quotations);
+        let purchases = JSON.parse(localStorage.getItem('product_purchase_'+purchaseId+userId)) || [];
+        console.log('purchases',purchases);
         console.log('Products',products);
-        console.log(quotations.length < 1);
-        if(quotations.length < 1){
-            localStorage.setItem('product_quotation_'+quotationId+userId, JSON.stringify(products));
+        console.log(purchases.length < 1);
+        if(purchases.length < 1){
+            localStorage.setItem('product_purchase_'+purchaseId+userId, JSON.stringify(products));
             console.log('Setted');
         }
 
-        quotations = JSON.parse(localStorage.getItem('product_quotation_'+quotationId+userId)) || [];
+        purchases = JSON.parse(localStorage.getItem('product_purchase_'+purchaseId+userId)) || [];
 
         if (index !== null) {
             // Edit produk di array berdasarkan index
-            quotations[index] = productQuotation;
+            purchases[index] = productpurchase;
         } else {
-            const isIdExist = quotations.some(function(quotation) {
-                return quotation.id === productQuotation.id;
+            const isIdExist = purchases.some(function(purchase) {
+                return purchase.id === productpurchase.id;
             });
             // Tambahkan produk baru ke array
-            if(productQuotation.id.length > 1 && !isIdExist){
-                quotations.push(productQuotation);
+            if(productpurchase.id.length > 1 && !isIdExist){
+                purchases.push(productpurchase);
             }else{
                 console.log('product already exists');
             }
         }
 
         // Simpan array ke localStorage
-        localStorage.setItem('product_quotation_'+quotationId+userId, JSON.stringify(quotations));
+        localStorage.setItem('product_purchase_'+purchaseId+userId, JSON.stringify(purchases));
         
         // Update tampilan HTML setelah menyimpan
         renderProductList();
     }
 
-    // Event listener untuk tombol Add Quotation Product
-    $('#addQuotationProduct').off('click').on('click', function() {
-        saveQuotationToLocalStorage(); // Panggil fungsi untuk menyimpan produk
+    // Event listener untuk tombol Add purchase Product
+    $('#addpurchaseProduct').off('click').on('click', function() {
+        savepurchaseToLocalStorage(); // Panggil fungsi untuk menyimpan produk
         $('#addProduct').modal('hide'); // Tutup modal setelah menyimpan perubahan
     });
 
@@ -1158,8 +1158,8 @@ $(document).ready(function() {
     // Event untuk mengisi modal edit saat tombol edit diklik
     $(document).on('click', '.edit-product', function() {
         let index = $(this).data('index');
-        let quotations = JSON.parse(localStorage.getItem('product_quotation_'+quotationId+userId)) || [];
-        let product = quotations[index];
+        let purchases = JSON.parse(localStorage.getItem('product_purchase_'+purchaseId+userId)) || [];
+        let product = purchases[index];
 
         // Isi form edit dengan data produk yang akan diedit
         editProductChoices.setChoiceByValue(product?.id);
@@ -1207,8 +1207,8 @@ $(document).ready(function() {
 
 
         // Ubah event tombol simpan di modal edit
-        $('#editQuotationProduct').off('click').on('click', function() {
-            saveEditedQuotationToLocalStorage(index);
+        $('#editpurchaseProduct').off('click').on('click', function() {
+            saveEditedpurchaseToLocalStorage(index);
             $('#editProductModal').modal('hide'); // Tutup modal setelah menyimpan perubahan
         });
     });
@@ -1216,19 +1216,19 @@ $(document).ready(function() {
 
     // Fungsi untuk me-render daftar produk
     function renderProductList() {
-        let localProductQuotation = JSON.parse(localStorage.getItem('product_quotation_'+quotationId+userId)) || [];
+        let localProductpurchase = JSON.parse(localStorage.getItem('product_purchase_'+purchaseId+userId)) || [];
         // Pastikan ada data sebelum merender
-        let dataProductQuotation = @json($quotation->products);
-        dataProductQuotation = JSON.parse(dataProductQuotation);
-        let quotations = [];
-        quotations = localProductQuotation.length === 0 ? dataProductQuotation : localProductQuotation;
-        if (quotations.length === 0) {
+        let dataProductpurchase = @json($purchase->products);
+        dataProductpurchase = JSON.parse(dataProductpurchase);
+        let purchases = [];
+        purchases = localProductpurchase.length === 0 ? dataProductpurchase : localProductpurchase;
+        if (purchases.length === 0) {
             $('#productList').html('<p>No products added.</p>');
         }
 
         let productListHtml = '';
-        console.log(quotations);
-        quotations.forEach((product, index) => {
+        console.log(purchases);
+        purchases.forEach((product, index) => {
             productListHtml += `
                 <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3 p-3 border rounded-3">
                     <div style="min-width:15em">
@@ -1273,7 +1273,7 @@ $(document).ready(function() {
     }
     
     // Fungsi untuk menyimpan atau memperbarui produk ke localStorage
-    function saveEditedQuotationToLocalStorage(index) {
+    function saveEditedpurchaseToLocalStorage(index) {
         // Ambil nilai dari form edit
         let productId = $('#editProduct').val();
         let productTitle = $('#editProduct option:selected').text();
@@ -1284,7 +1284,7 @@ $(document).ready(function() {
         let packaging = $('#editPackaging').val();
 
         // Buat objek produk yang akan diedit
-        let productQuotation = {
+        let productpurchase = {
             id: productId,
             title: productTitle,
             description: description,
@@ -1295,13 +1295,13 @@ $(document).ready(function() {
         };
 
         // Ambil array dari localStorage atau buat array baru jika belum ada
-        let quotations = JSON.parse(localStorage.getItem('product_quotation_'+quotationId+userId)) || [];
+        let purchases = JSON.parse(localStorage.getItem('product_purchase_'+purchaseId+userId)) || [];
 
         // Edit produk di array berdasarkan index
-        quotations[index] = productQuotation;
+        purchases[index] = productpurchase;
 
         // Simpan array ke localStorage
-        localStorage.setItem('product_quotation_'+quotationId+userId, JSON.stringify(quotations));
+        localStorage.setItem('product_purchase_'+purchaseId+userId, JSON.stringify(purchases));
 
         // Update tampilan HTML setelah menyimpan
         renderProductList();
@@ -1315,8 +1315,8 @@ $(document).ready(function() {
 
     // Fungsi untuk mengedit produk
     function editProduct(index) {
-        let quotations = JSON.parse(localStorage.getItem('product_quotation_'+quotationId+userId)) || [];
-        let product = quotations[index];
+        let purchases = JSON.parse(localStorage.getItem('product_purchase_'+purchaseId+userId)) || [];
+        let product = purchases[index];
         
         // Ambil packaging berdasarkan satuan_id dari product
         $.ajax({
@@ -1344,14 +1344,14 @@ $(document).ready(function() {
 
     // Fungsi untuk menghapus produk
     function deleteProduct(index) {
-        let quotations = JSON.parse(localStorage.getItem('product_quotation_'+quotationId+userId)) || [];
-        console.log(quotations);
+        let purchases = JSON.parse(localStorage.getItem('product_purchase_'+purchaseId+userId)) || [];
+        console.log(purchases);
         console.log('clicked');
         // Hapus produk dari array
-        quotations.splice(index, 1);
+        purchases.splice(index, 1);
 
         // Simpan array baru ke localStorage
-        localStorage.setItem('product_quotation_'+quotationId+userId, JSON.stringify(quotations));
+        localStorage.setItem('product_purchase_'+purchaseId+userId, JSON.stringify(purchases));
 
         // Render ulang produk
         renderProductList();
@@ -1366,38 +1366,38 @@ $(document).ready(function() {
         $('#packaging').val('');
     }
 
-    function setDataQuotation(){
-        let localQuotation = JSON.parse(localStorage.getItem('data_quotation_'+quotationId+userId)) || {};
+    function setDatapurchase(){
+        let localpurchase = JSON.parse(localStorage.getItem('data_purchase_'+purchaseId+userId)) || {};
         
-        let dataQuotation = {
-            date : "{{$quotation->date}}",
-            client : "{{$quotation->client_id}}",
-            perihal : "{{$quotation->perihal}}",
-            for : "{{$quotation->for}}",
-            message : @json($quotation->message),
-            keterangan : @json($quotation->keterangan),
+        let datapurchase = {
+            date : "{{$purchase->date}}",
+            client : "{{$purchase->client_id}}",
+            perihal : "{{$purchase->perihal}}",
+            for : "{{$purchase->for}}",
+            message : @json($purchase->message),
+            keterangan : @json($purchase->keterangan),
         }
-        clientChoices.setChoiceByValue(localQuotation.client ?? dataQuotation.client);
-        $('#perihal').val(localQuotation.perihal ?? dataQuotation.perihal);
-        $('#for').val(localQuotation.for ?? dataQuotation.for);
-        tinymce.get('altiny').setContent(localQuotation.message ?? dataQuotation.message);
-        tinymce.get('keterangan').setContent(localQuotation.keterangan ?? dataQuotation.keterangan);
+        clientChoices.setChoiceByValue(localpurchase.client ?? datapurchase.client);
+        $('#perihal').val(localpurchase.perihal ?? datapurchase.perihal);
+        $('#for').val(localpurchase.for ?? datapurchase.for);
+        tinymce.get('altiny').setContent(localpurchase.message ?? datapurchase.message);
+        tinymce.get('keterangan').setContent(localpurchase.keterangan ?? datapurchase.keterangan);
     }
 
-    function setProductQuotation(){
-        let productQuotations = JSON.parse(localStorage.getItem('product_quotation_'+quotationId+userId)) || {};
-        let quotations = @json($quotation->products);
-        localStorage.setItem('product_quotation_'+quotationId+userId, JSON.stringify(JSON.parse(quotations)));
+    function setProductpurchase(){
+        let productpurchases = JSON.parse(localStorage.getItem('product_purchase_'+purchaseId+userId)) || {};
+        let purchases = @json($purchase->products);
+        localStorage.setItem('product_purchase_'+purchaseId+userId, JSON.stringify(JSON.parse(purchases)));
     }
 
     function resetLocal(){
-        localStorage.removeItem('product_quotation_'+quotationId+userId);
-        localStorage.removeItem('data_quotation_'+quotationId+userId);
+        localStorage.removeItem('product_purchase_'+purchaseId+userId);
+        localStorage.removeItem('data_purchase_'+purchaseId+userId);
         Toast.fire({
             icon: 'success',
             title: 'Berhasil mereset ulang pengeditan' // Pesan sukses dari response JSON
         });
-        setDataQuotation();
+        setDatapurchase();
         renderProductList();
     }
 
@@ -1408,10 +1408,10 @@ $(document).ready(function() {
     // Function to open and populate the modal with data from localStorage
     function populatePreviewModal() {
         // Fetch the data from localStorage
-        let dataQuotation = JSON.parse(localStorage.getItem('data_quotation_'+quotationId+userId)) || {};
-        let productQuotations = JSON.parse(localStorage.getItem('product_quotation_'+quotationId+userId)) || [];
+        let datapurchase = JSON.parse(localStorage.getItem('data_purchase_'+purchaseId+userId)) || {};
+        let productpurchases = JSON.parse(localStorage.getItem('product_purchase_'+purchaseId+userId)) || [];
         $.ajax({
-            url: `/ajax/client/${dataQuotation.client}`,
+            url: `/ajax/client/${datapurchase.client}`,
             type: 'GET',
             success: function(data) {
                 $('.previewClientName').text(data.name || 'PT MITRA BETON MANDIRI');
@@ -1419,14 +1419,14 @@ $(document).ready(function() {
                 $('.previewClientPostal').text(data.address.postal_code || '123456');
             }
         });
-        $('.previewFor').text(dataQuotation.for || 'PT MBM');
-        $('.previewPerihal').text(dataQuotation?.perihal || 'Penawaran Harga');
+        $('.previewFor').text(datapurchase.for || 'PT MBM');
+        $('.previewPerihal').text(datapurchase?.perihal || 'Penawaran Harga');
         // Populate basic information fields
-        $('.previewDate').text(dataQuotation.date || '13 Oktober 2021');
+        $('.previewDate').text(datapurchase.date || '13 Oktober 2021');
 
-        // Populate product quotations table
+        // Populate product purchases table
         let productRows = '';
-        productQuotations.forEach((product, index) => {
+        productpurchases.forEach((product, index) => {
             productRows += `
                 <tr>
                     <td class="text-bold-500">${index + 1}</td>
@@ -1442,14 +1442,14 @@ $(document).ready(function() {
         // Insert product rows into the table
         $('table#previewTable tbody').html(productRows);
 
-        $('#previewMessage').html(dataQuotation.message || `
+        $('#previewMessage').html(datapurchase.message || `
             <p class="mb-3">
                 Bersama ini kami aiukan Penawaran Harga dengan harga dan detil penawaran dijelaskan di bawah ini :
             </p>
         `);
 
         // Populate additional details (like keterangan)
-        $('#previewKeterangan').html(dataQuotation.keterangan || `
+        $('#previewKeterangan').html(datapurchase.keterangan || `
             <p class="pl-3">
                 - Pembayaran 30 hari<br />
                 - Minimum pengiriman 40 drum<br />
@@ -1459,18 +1459,18 @@ $(document).ready(function() {
         `);
     }
 
-    // SaveQuotation
-    // Event ketika tombol saveQuotation diklik
-    $('#saveQuotation').on('click', function() {
+    // Savepurchase
+    // Event ketika tombol savepurchase diklik
+    $('#savepurchase').on('click', function() {
         // Ambil data dari localStorage (atau sumber lain)
-        let dataQuotation = JSON.parse(localStorage.getItem('data_quotation_'+quotationId+userId));
-        let productQuotations = JSON.parse(localStorage.getItem('product_quotation_'+quotationId+userId));
+        let datapurchase = JSON.parse(localStorage.getItem('data_purchase_'+purchaseId+userId));
+        let productpurchases = JSON.parse(localStorage.getItem('product_purchase_'+purchaseId+userId));
 
         // Tambahkan CSRF token agar Laravel dapat memverifikasi request
         let csrfToken = $('meta[name="csrf-token"]').attr('content');
 
         // Ubah format tanggal dari '24 Sep 2024' ke '2024-09-24' menggunakan JavaScript
-        let date = new Date(dataQuotation.date);
+        let date = new Date(datapurchase.date);
         let year = date.getFullYear();
         let month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth() menghasilkan 0-11, jadi tambahkan 1
         let day = String(date.getDate()).padStart(2, '0');
@@ -1480,18 +1480,18 @@ $(document).ready(function() {
 
         // Format data yang akan dikirimkan ke controller
         let dataToSend = {
-            client: dataQuotation.client,
+            client: datapurchase.client,
             date: formattedDate,
-            for: dataQuotation.for,
-            message: dataQuotation.message,
-            keterangan: dataQuotation.keterangan,
-            products: JSON.stringify(productQuotations), // Ubah array ke format JSON
+            for: datapurchase.for,
+            message: datapurchase.message,
+            keterangan: datapurchase.keterangan,
+            products: JSON.stringify(productpurchases), // Ubah array ke format JSON
             _token: csrfToken // CSRF token untuk keamanan
         };
         console.log(dataToSend);
         // Lakukan request AJAX POST
         $.ajax({
-            url: "{{ route('quotation.update', $quotation->id) }}", // Route untuk menambah quotation
+            url: "{{ route('purchase.update', $purchase->id) }}", // Route untuk menambah purchase
             type: "PUT",
             data: dataToSend,
             success: function(response) {
@@ -1502,7 +1502,7 @@ $(document).ready(function() {
                         title: response.message // Pesan sukses dari response JSON
                     });
                     resetLocal();
-                    window.location.href = "{{ route('quotation.index') }}";
+                    window.location.href = "{{ route('purchase.index') }}";
                 } else {
                     // Menampilkan toast sukses
                     Toast.fire({
@@ -1521,8 +1521,8 @@ $(document).ready(function() {
         });
     });
 
-    setProductQuotation();
-    setDataQuotation();
+    setProductpurchase();
+    setDatapurchase();
     // Render product list saat halaman dimuat
     renderProductList();
 });

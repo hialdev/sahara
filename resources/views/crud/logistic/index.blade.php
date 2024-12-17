@@ -119,7 +119,7 @@
 
                                 <td style="width: 5em">
                                     <div class="d-flex align-items-center gap-1">
-                                        <a href="{{route('logistic.edit', $logistic->id)}}" class="d-flex align-items-center justify-content-center btn btn-sm btn-outline-primary block" style="aspect-ratio:1/1">
+                                        <a href="{{route('logistic.edit', $logistic->id)}}" class="d-flex align-items-center justify-content-center btn btn-sm btn-primary block" style="aspect-ratio:1/1">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                                 <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
                                                     <path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.1 2.1 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621" />
@@ -128,49 +128,13 @@
                                             </svg>
                                         </a>
                                         
-                                        <button type="button" class="btn btn-sm btn-outline-danger block" style="aspect-ratio:1/1" data-bs-toggle="modal"
-                                            data-bs-target="#danger-{{$logistic->id}}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                                                <path fill="currentColor" d="m20.37 8.91l-1 1.73l-12.13-7l1-1.73l3.04 1.75l1.36-.37l4.33 2.5l.37 1.37zM6 19V7h5.07L18 11v8a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2" />
-                                            </svg>
-                                        </button>
+                                        <a href="{{route('logistic.setting', $logistic->id)}}"
+                                            class="btn btn-sm btn-light-secondary block"
+                                            style="aspect-ratio:1/1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" height="1.4em" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M12.428 2c-1.114 0-2.129.6-4.157 1.802l-.686.406C5.555 5.41 4.542 6.011 3.985 7c-.557.99-.557 2.19-.557 4.594v.812c0 2.403 0 3.605.557 4.594s1.57 1.59 3.6 2.791l.686.407C10.299 21.399 11.314 22 12.428 22s2.128-.6 4.157-1.802l.686-.407c2.028-1.2 3.043-1.802 3.6-2.791c.557-.99.557-2.19.557-4.594v-.812c0-2.403 0-3.605-.557-4.594s-1.572-1.59-3.6-2.792l-.686-.406C14.555 2.601 13.542 2 12.428 2m-3.75 10a3.75 3.75 0 1 1 7.5 0a3.75 3.75 0 0 1-7.5 0" clip-rule="evenodd"/></svg>
+                                        </a>
                                     </div>
                                     
-                                    {{-- Modal Delete --}}
-                                    <div class="modal fade text-left" id="danger-{{$logistic->id}}" tabindex="-1" role="dialog"
-                                        aria-labelledby="myModalLabel120" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
-                                            role="document">
-                                            <div class="modal-content rounded-4">
-                                                <div class="modal-header bg-danger border-0">
-                                                    <h5 class="modal-title white" id="myModalLabel120">Confirmation Delete</h5>
-                                                    <button type="button" class="btn btn-danger bg-danger" data-bs-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <i class="mb-1 bi-x-lg"></i>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body border-0">
-                                                    Apakah anda yakin menghapus data logistic dengan id {{$logistic->id}} ? data yang dihapus bersifat permanen tidak dapat dikembalikan
-                                                </div>
-                                                <div class="modal-footer border-0">
-                                                    <button type="button" class="btn btn-light-secondary"
-                                                        data-bs-dismiss="modal">
-                                                        <i class="bx bx-x d-block d-sm-none"></i>
-                                                        <span class="d-none d-sm-block">Batal</span>
-                                                    </button>
-                                                    <form action="{{route('logistic.destroy', $logistic->id)}}" method="POST">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button type="submit" class="btn btn-danger ms-1"
-                                                            data-bs-dismiss="modal">
-                                                            <i class="bx bx-check d-block d-sm-none"></i>
-                                                            <span class="d-none d-sm-block">Ya, Hapus</span>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </td>
                             </tr>
                             @endforeach

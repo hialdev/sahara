@@ -1,7 +1,7 @@
-@extends('layouts.dash', ['routeName' => 'z'])
+@extends('layouts.dash', ['routeName' => 'satuan'])
 
-@section('title', 'z')
-@section('description', 'Kelola z product sebelum menentukan packaging product')
+@section('title', 'Satuan')
+@section('description', 'Kelola Satuan product sebelum menentukan packaging product')
 
 @section('css')
     <link rel="stylesheet" href="/dist/assets/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
@@ -12,10 +12,10 @@
 <section class="section mb-3">
     <div class="row">
         <div class="col-12">
-            <form action="{{route('z.store')}}" method="POST">
+            <form action="{{route('satuan.store')}}" method="POST">
                 @csrf
                 <div class="d-flex align-items-center gap-3 justify-content-between">
-                    <input type="text" name="name" class="form-control border-none p-2 px-3" placeholder="Nama z">
+                    <input type="text" name="name" class="form-control border-none p-2 px-3" placeholder="Nama Satuan">
                     <button type="submit" class="btn btn-primary" style="white-space:nowrap">Add New</button>
                 </div>
             </form>
@@ -113,7 +113,7 @@
                                 <div class="d-flex align-items-center gap-1">
                                     <button
                                         type="button" 
-                                        class="btn btn-sm btn-outline-primary block" 
+                                        class="btn btn-sm btn-primary block" 
                                         style="aspect-ratio:1/1"
                                         data-bs-toggle="modal" 
                                         data-bs-target="#editModal"
@@ -126,53 +126,13 @@
                                             </g>
                                         </svg>
                                     </button>
-                                    <button
-                                        type="button"
-                                        class="btn btn-sm btn-outline-danger block"
-                                        style="aspect-ratio:1/1"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal"
-                                        data-id="{{$item->id}}"
-                                        data-name="{{$item->name}}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                                            <path fill="currentColor" d="m20.37 8.91l-1 1.73l-12.13-7l1-1.73l3.04 1.75l1.36-.37l4.33 2.5l.37 1.37zM6 19V7h5.07L18 11v8a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2" />
-                                        </svg>
-                                    </button>
+                                    <a href="{{route('satuan.setting', $item->id)}}"
+                                        class="btn btn-sm btn-light-secondary block"
+                                        style="aspect-ratio:1/1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" height="1.4em" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M12.428 2c-1.114 0-2.129.6-4.157 1.802l-.686.406C5.555 5.41 4.542 6.011 3.985 7c-.557.99-.557 2.19-.557 4.594v.812c0 2.403 0 3.605.557 4.594s1.57 1.59 3.6 2.791l.686.407C10.299 21.399 11.314 22 12.428 22s2.128-.6 4.157-1.802l.686-.407c2.028-1.2 3.043-1.802 3.6-2.791c.557-.99.557-2.19.557-4.594v-.812c0-2.403 0-3.605-.557-4.594s-1.572-1.59-3.6-2.792l-.686-.406C14.555 2.601 13.542 2 12.428 2m-3.75 10a3.75 3.75 0 1 1 7.5 0a3.75 3.75 0 0 1-7.5 0" clip-rule="evenodd"/></svg>
+                                    </a>
                                 </div>
-                                <div class="modal fade text-left" id="danger-{{$item->id}}" tabindex="-1" role="dialog"
-                                    aria-labelledby="myModalLabel120" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
-                                        role="document">
-                                        <div class="modal-content rounded-4">
-                                            <div class="modal-header bg-danger border-0">
-                                                <h5 class="modal-title white" id="myModalLabel120">Confirmation Delete</h5>
-                                                <button type="button" class="btn btn-danger bg-danger" data-bs-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <i class="mb-1 bi-x-lg"></i>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body border-0">
-                                                Apakah anda yakin menghapus data dengan id {{$item->id}} ? data yang dihapus bersifat permanen tidak dapat dikembalikan
-                                            </div>
-                                            <div class="modal-footer border-0">
-                                                <button type="button" class="btn btn-light-secondary"
-                                                    data-bs-dismiss="modal">
-                                                    <i class="bx bx-x d-block d-sm-none"></i>
-                                                    <span class="d-none d-sm-block">Batal</span>
-                                                </button>
-                                                <form action="{{route('z.destroy', $item->id)}}" method="POST">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button type="submit" class="btn btn-danger ms-1"
-                                                        data-bs-dismiss="modal">
-                                                        <i class="bx bx-check d-block d-sm-none"></i>
-                                                        <span class="d-none d-sm-block">Ya, Hapus</span>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </td>
                         </tr>
                         @empty
@@ -190,12 +150,12 @@
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
             role="document">
-            <form action="{{route('z.update', $item->id)}}" method="POST" class="w-100">
+            <form action="{{route('satuan.update', $item->id)}}" method="POST" class="w-100">
                 @csrf
                 @method('PUT')
                 <div class="modal-content">
                     <div class="modal-header border-0">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">Edit z</h5>
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Edit Satuan</h5>
                         <button type="button" class="btn text-secondary" data-bs-dismiss="modal"
                             aria-label="Close">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
@@ -207,8 +167,8 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="mb-3">
-                                    <label for="name" class="form-label">z Name</label>
-                                    <input type="text" name="name" class="form-control" placeholder="z Name" id="name" value="{{ old('name') }}" required>
+                                    <label for="name" class="form-label">Satuan Name</label>
+                                    <input type="text" name="name" class="form-control" placeholder="Satuan Name" id="name" value="{{ old('name') }}" required>
                                 </div>
                             </div>
                         </div>
@@ -224,39 +184,6 @@
                     </div>
                 </div>
             </form>
-        </div>
-    </div>
-    {{-- Modal Delete --}}
-    <div class="modal fade text-left" id="deleteModal" tabindex="-1" role="dialog"
-        aria-labelledby="myModalLabel120" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
-            role="document">
-            <div class="modal-content rounded-4">
-                <div class="modal-header bg-danger border-0">
-                    <h5 class="modal-title white" id="myModalLabel120">Confirmation Delete</h5>
-                    <button type="button" class="btn btn-danger bg-danger" data-bs-dismiss="modal"
-                        aria-label="Close">
-                        <i class="mb-1 bi-x-lg"></i>
-                    </button>
-                </div>
-                <div class="modal-body border-0">
-                    Apakah anda yakin menghapus data z : <span class="z-title fw-semibold"></span> ? data yang dihapus bersifat permanen tidak dapat dikembalikan
-                </div>
-                <div class="modal-footer border-0">
-                    <button type="button" class="btn btn-light-secondary"
-                        data-bs-dismiss="modal">
-                        <span class="">Batal</span>
-                    </button>
-                    <form action="{{route('z.destroy', $item->id)}}" method="POST">
-                        @csrf
-                        @method('delete')
-                        <button type="submit" class="btn btn-danger ms-1"
-                            data-bs-dismiss="modal">
-                            <span class="">Ya, Hapus</span>
-                        </button>
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -307,22 +234,9 @@
             modal.find('input[name="name"]').val(name); // input untuk nama produk
 
             // Ubah action form sesuai ID produk
-            modal.find('form').attr('action', '/z/' + id + '/edit');
+            modal.find('form').attr('action', '/satuan/' + id + '/edit');
         });
 
-        // Saat modal delete ditampilkan
-        $('#deleteModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Tombol yang memicu modal
-            var id = button.data('id'); // Ambil data-id dari tombol
-            var name = button.data('name'); // Ambil data-name dari tombol
-
-            // Masukkan data ke dalam form modal
-            var modal = $(this);
-            modal.find('span.z-title').text(name); // Update nama produk
-
-            // Ubah action form sesuai ID produk
-            modal.find('form').attr('action', '/z/' + id + '/destroy');
-        });
     });
 </script>
 @endsection

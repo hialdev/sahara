@@ -607,7 +607,7 @@
                 </button>
             </div>
             <div class="modal-body border-0">
-                Apakah anda yakin menghapus data Quotation dengan nomor <span class="fw-bold">{{$quotation->no}}</span> untuk client <span class="fw-bold">{{$quotation->client->name}}</span> ? data yang dihapus bersifat permanen tidak dapat dikembalikan
+                Apakah anda yakin menghapus data Quotation dengan nomor <span class="fw-bold">{{$quotation->no}}</span> untuk client <span class="fw-bold">{{$quotation->client->name}}</span> ? data Purchase Order yang terkait mungkin akan terdampak
             </div>
             <div class="modal-footer border-0">
                 <button type="button" class="btn btn-light-secondary"

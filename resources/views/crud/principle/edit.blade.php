@@ -1,4 +1,4 @@
-@extends('templates.crud.add', ['routeName'=>'principle'])
+@extends('templates.crud.add', ['routeName'=>'principle', 'settingPage' => true, 'routeId'=> $principle->id])
 
 @section('title', 'Edit Principle : '.$principle->name)
 @section('description', 'Edit Principle and Addresses')
@@ -36,7 +36,6 @@
                                     <label for="description" class="form-label">Description</label>
                                     <textarea name="description" id="description" cols="30" rows="3" class="form-control">{{old('description', $principle->description)}}</textarea>
                                 </div>
-                                
                             </div>
                         </div>
                     </div>

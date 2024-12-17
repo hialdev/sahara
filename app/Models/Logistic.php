@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class Logistic extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+
     protected $connection = 'osano';
 
     protected $fillable = ['name', 'email', 'description', 'contact_name', 'contact_email', 'contact_phone'];
@@ -23,6 +26,9 @@ class Logistic extends Model
                 $model->{$model->getKeyName()} = (string) Str::uuid();
             }
         });
+        static::deleting(function ($model) {
+            $model->addresses()->delete();
+        });
     }
 
     protected $keyType = 'string';
@@ -32,5 +38,9 @@ class Logistic extends Model
     public function addresses()
     {
         return $this->hasMany(LogisticAddress::class, 'logistic_id');
+    }
+
+    public function purchaseOrders(){
+        return $this->hasMany(ProcessPurchaseOrder::class, 'logistic_id');
     }
 }

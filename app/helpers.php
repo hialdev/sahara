@@ -19,3 +19,19 @@ if (!function_exists('formatTanggal')) {
         return Carbon::parse($date)->translatedFormat('d F Y');
     }
 }
+
+if (!function_exists('formatRupiah')) {
+    function formatRupiah($angka) {
+        // Set locale to Indonesian
+        setlocale(LC_MONETARY, 'id_ID');
+        $formatted = number_format($angka, 2, ',', '.');
+        return 'Rp ' . $formatted;
+    }
+}
+
+if (!function_exists('getAccountTypes')) {
+    function getAccountTypes() {
+        $accountTypes = explode(',', env('ACCOUNTING_ACCOUNT_TYPES'));
+        return $accountTypes;
+    }
+}

@@ -79,31 +79,6 @@
                                             @endforelse
                                         </select>
                                         <div id="client-detail">
-                                            {{-- <div class="card bg-light-secondary mb-3">
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-md-6 mb-3">
-                                                            <div class="fw-semibold">{{$client->name}}</div>
-                                                            <div style="font-size:12px" class="text-secondary">NPWP : {{$client->npwp}}</div>
-                                                            <div style="font-size:12px" class="text-secondary">{{$client->email}}</div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="d-flex align-items-center gap-3 mb-3">
-                                                                <div class="d-flex align-items-center justify-content-center text-primary rounded-2">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                                                                        <path fill="currentColor" d="M6 17c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1H6m9-9a3 3 0 0 1-3 3a3 3 0 0 1-3-3a3 3 0 0 1 3-3a3 3 0 0 1 3 3M3 5v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2" />
-                                                                    </svg>
-                                                                </div>
-                                                                <h6 class="m-0" style="font-size: 13px">PIC Contact</h6>
-                                                            </div>
-                                                            <div class="fw-semibold">
-                                                                {{$client->contact_name}}
-                                                            </div>
-                                                            <div style="font-size:12px" class="text-secondary">{{$client->contact_email}}, {{$client->contact_phone}}</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div> --}}
                                         </div>
                                         <div class="text-secondary">Client belum terdaftar? <a href="{{route('client.add')}}" target="_blank" class="ms-2">Tambah Client</a></div>
                                     </div>
@@ -118,7 +93,18 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="mb-3">
-                                        <label for="nosurat" class="form-label">Nomor Surat Req. Order <span class="text-danger">*</span></label>
+                                        <label for="address" class="form-label">Kirim Ke Alamat <span class="text-danger">*</span> <span id="load-data" class="p-1 px-2 rounded-3 bg-light-primary" style="cursor: pointer">update</span></label>
+                                        <select id="address" name="address" class="form-select">
+                                            <option value="">Pilih Address</option>
+                                        </select>
+                                        <div id="address-detail">
+                                        </div>
+                                        <div class="text-secondary">Tidak ada alamat yang sesuai untuk dikirim? <a href="" id="address-link" target="_blank" class="ms-2">Tambah Alamat Client</a></div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="mb-3">
+                                        <label for="nosurat" class="form-label">Nomor Refrensi Surat Req. Order <span class="text-danger">*</span></label>
                                         <input type="text" name="nosurat" id="nosurat" class="form-control" />
                                     </div>
                                 </div>
@@ -611,6 +597,13 @@ $(document).ready(function() {
         removeItemButton: true
     });
 
+    const addressChoices = new Choices('#address', {
+        searchEnabled: true,
+        placeholder: true,
+        placeholderValue: 'Select a Address',
+        removeItemButton: true
+    });
+
     const quotationChoices = new Choices('#quotation', {
         searchEnabled: true,
         placeholder: true,
@@ -711,6 +704,56 @@ $(document).ready(function() {
         $(this).val('Rp ' + rupiah);
     });
 
+    $('#address').on('change', function(){
+        let addressId = $(this).val();
+        let clientId = $('#client').val();
+
+        $.ajax({
+            url: `/ajax/address/${addressId}`,
+            type: 'GET',
+            success: function(data) {
+                let addressShow = `
+                    <div class="card bg-light-secondary mb-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="fw-semibold">${data.address_tag}</div>
+                                    <div style="font-size:12px" class="text-secondary">Address : ${data.address}, ${data.city} - ${data.postal_code}</div>
+                                    <div style="font-size:12px" class="text-secondary">TELP / FAX : ${data.telp} / ${data.fax}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+        
+                $('#address-detail').html(addressShow);
+            }
+        });
+    });
+
+    $('#load-data').on('click', function(){
+        let clientId = $('#client').val();
+        let addressId = $('#address').val();
+        if(clientId && clientId != '' && clientId.length > 2){
+            $.ajax({
+                url: `/ajax/client/${clientId}`,
+                type: 'GET',
+                success: function(data) {
+                    const formattedData = data.addresses.map(item => ({
+                        value: `${item.id}`,
+                        label: `${item.address_tag} @ ${item.address}, ${item.city}, ${item.postal_code}`,
+                    }));
+                    addressChoices.clearChoices();
+                    addressChoices.setChoices(formattedData);
+                    addressChoices.setChoiceByValue(addressId);
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Mengambil nilai address terbaru',
+                    })
+                }
+            })
+        }
+    });
     $('#client').on('change', function () {
         let clientId = $(this).val();
 
@@ -718,6 +761,13 @@ $(document).ready(function() {
             url: `/ajax/client/${clientId}`,
             type: 'GET',
             success: function(data) {
+                $('#address-link').attr('href', '/client/'+clientId+'/edit');
+                addressChoices.clearChoices();
+                const formattedData = data.addresses.map(item => ({
+                    value: `${item.id}`, // Ambil 'id' sebagai 'value'
+                    label: `${item.address_tag} @ ${item.address}, ${item.city}, ${item.postal_code}`, // Gabungkan 'name' dan 'capacity' untuk 'label'
+                }));
+                addressChoices.setChoices(formattedData);
                 $.ajax({
                     url: `/ajax/quotation/client/${clientId}`,
                     type: 'GET',
@@ -924,11 +974,11 @@ $(document).ready(function() {
 
     $('#qty').on('keyup', function(){
         const count = countQtyProduct();
-        $('#edit-qty-product span.count').text(count);
+        $('#qty-product span.count').text(count);
     });
     $('#packaging').on('change', function(){
         const count = countQtyProduct();
-        $('#edit-qty-product span.count').text(count);
+        $('#qty-product span.count').text(count);
     });
     $('#editQty').on('keyup', function(){
         const count = countQtyProduct(true);
@@ -970,6 +1020,7 @@ $(document).ready(function() {
 
     function saveRequestOrder(){
         let client = $('#client').val();
+        let address = $('#address').val();
         let date = $('#date').val();
         let price = $('#price').val().replace(/[^\d]/g, '');
         let quotation = $('#quotation').val();
@@ -987,6 +1038,7 @@ $(document).ready(function() {
 
                 // Menambahkan field ke dalam formData
                 formData.append('client', client);
+                formData.append('address', address);
                 formData.append('date', date);
                 formData.append('_token', '{{ csrf_token() }}');
                 formData.append('price', price);

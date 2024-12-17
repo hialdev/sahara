@@ -59,7 +59,7 @@ return [
     |
     */
 
-    'files' => 'C:\xampp\htdocs\EMA\sahara\session',
+    'files' => env('SESSION_PATH_FILE', null),
 
     /*
     |--------------------------------------------------------------------------

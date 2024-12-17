@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class ClientAddress extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+
     protected $connection = 'osano';
 
     protected $fillable = ['client_id', 'address_tag', 'address', 'city', 'postal_code', 'telp', 'fax'];

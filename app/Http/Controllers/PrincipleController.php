@@ -131,6 +131,12 @@ class PrincipleController extends Controller
         }
     }
 
+    public function setting($id) {
+        $principle = Principle::findOrFail($id);
+        
+        return view('crud.principle.setting', compact('principle'));
+    }
+
     public function destroy($id){
         try {
             Principle::destroy($id);

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 class PackagingController extends Controller
 {
     public function index(){
-        $datas = Packaging::all();
+        $datas = Packaging::with('satuan')->get();
         return view('crud.packaging.index', compact('datas'));
     }
 
@@ -84,6 +84,12 @@ class PackagingController extends Controller
             return redirect()->back()->withInput()
                 ->with('error', 'Gagal memperbarui packaging product, error: ' . $e->getMessage());
         }
+    }
+
+    public function setting($id){
+        $packaging = Packaging::findOrFail($id);
+
+        return view('crud.packaging.setting', compact('packaging'));
     }
 
     public function destroy($id){

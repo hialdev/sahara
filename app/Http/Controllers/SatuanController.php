@@ -88,6 +88,12 @@ class SatuanController extends Controller
         }
     }
 
+    public function setting($id){
+        $satuan = Satuan::findOrFail($id);
+
+        return view('crud.satuan.setting', compact('satuan'));
+    }
+
     public function destroy($id){
         try {
             Satuan::destroy($id);

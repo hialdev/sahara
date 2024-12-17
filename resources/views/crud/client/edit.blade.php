@@ -1,4 +1,4 @@
-@extends('templates.crud.add', ['routeName'=>'client'])
+@extends('templates.crud.add', ['routeName'=>'client', 'settingPage' => true, 'routeId' => $client->id])
 
 @section('title', 'Edit Client : '.$client->name)
 @section('description', 'Edit Client and Addresses')

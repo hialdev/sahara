@@ -6,6 +6,7 @@ use App\Models\Client;
 use App\Models\Product;
 use App\Models\Quotation;
 use App\Models\Satuan;
+use App\Models\Setting;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -22,6 +23,7 @@ class QuotationController extends Controller
         $satuans = Satuan::all();
         $products = Product::all();
         $clients = Client::all();
+
         return view('quotation.add', compact('clients', 'satuans', 'products'));
     }
 
@@ -105,6 +107,10 @@ class QuotationController extends Controller
 
     public function edit($id){
         $quotation = Quotation::findOrFail($id);
+        if(count($quotation->purchaseOrders) > 0){
+            return redirect()->route('quotation.index')->with('error', 'Quotation has been processed to Purchase Orders, so cannot be edit');
+        }
+        
         $satuans = Satuan::all();
         $products = Product::all();
         $clients = Client::all();
@@ -156,6 +162,10 @@ class QuotationController extends Controller
 
         try {
             $quotation = Quotation::find($id);
+            if(count($quotation->purchaseOrders) > 0){
+                return redirect()->route('quotation.index')->with('error', 'Quotation has been processed to Purchase Orders, so cannot be edit');
+            }
+
             // Simpan quotation baru
             $quotation->update([
                 'date' => $request->date,
@@ -186,6 +196,11 @@ class QuotationController extends Controller
         }
     }
 
+    public function setting($id){
+        $quotation = Quotation::findOrFail($id);
+        return view('quotation.setting', compact('quotation'));
+    }
+
     public function destroy($id){
         try {
             Quotation::destroy($id);
@@ -205,9 +220,13 @@ class QuotationController extends Controller
 
     public function download($id){
         $quotation = Quotation::findOrFail($id);
-        $pdf = Pdf::setOption(['defaultFont' => 'serif'])->loadView('quotation.pdf', [
+        $getSet = Setting::all()->keyBy('the_key');
+        $kop_image = env('SSO_URL').'/storage/'.$getSet->get('a4_cover')->the_value;
+
+        $pdf = Pdf::setOption(['defaultFont' => 'serif', 'isRemoteEnabled'=> true])->loadView('quotation.pdf', [
             'title' => 'Quotation Sahara No '.$quotation->no,
-            'quotation' => $quotation
+            'quotation' => $quotation,
+            'kop_image' => $kop_image,
         ]);
     
         return $pdf->download('quotation-'.$quotation->no.'.pdf');

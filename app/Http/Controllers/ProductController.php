@@ -72,7 +72,7 @@ class ProductController extends Controller
                 'id_satuan_barang' => $request->satuan,
             ]);
                 
-            return redirect()->back('product.index')
+            return redirect()->route('product.index')
                 ->with('success', 'product created successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->withInput()
@@ -118,6 +118,12 @@ class ProductController extends Controller
             return redirect()->back()->withInput()
                 ->with('error', 'Gagal memperbarui product, error: ' . $e->getMessage());
         }
+    }
+
+    public function setting($id) {
+        $product = Product::findOrFail($id);
+
+        return view('crud.product.setting', compact('product'));
     }
 
     public function destroy($id){

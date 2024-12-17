@@ -130,6 +130,11 @@ class LogisticController extends Controller
         }
     }
 
+    public function setting($id){
+        $logistic = Logistic::findOrFail($id);
+        return view('crud.logistic.setting', compact('logistic'));
+    }
+
     public function destroy($id){
         try {
             Logistic::destroy($id);

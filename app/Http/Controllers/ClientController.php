@@ -133,6 +133,11 @@ class ClientController extends Controller
         }
     }
 
+    public function setting($id){
+        $client = Client::findOrFail($id);
+        return view('crud.client.setting', compact('client'));
+    }
+
     public function destroy($id){
         try {
             Client::destroy($id);

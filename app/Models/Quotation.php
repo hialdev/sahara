@@ -5,11 +5,13 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class Quotation extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     protected $connection = 'osano';
 
     protected $fillable = ['no', 'date', 'client_id', 'for', 'message', 'keterangan', 'products', 'status'];
@@ -67,5 +69,9 @@ class Quotation extends Model
 
     public function client(){
         return $this->hasOne(Client::class, 'id', 'client_id');
+    }
+
+    public function purchaseOrders(){
+        return $this->hasMany(PurchaseOrder::class, 'quotation_id');
     }
 }
