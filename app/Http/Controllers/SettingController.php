@@ -90,6 +90,11 @@ class SettingController extends Controller
     public function update($id, Request $request)
     {
         $setting = Setting::findOrFail($id);
+        if($setting->is_urgent == 1){
+            return redirect()->back()->withInput()
+            ->with('error', 'Setting gagal diupdate, Setting ini diperlukan dalam sistem');
+        }
+
         // Validasi input
         if ($setting->type_form == 'image') {
             // Validator untuk file image
@@ -189,6 +194,10 @@ class SettingController extends Controller
     public function destroy($id){
         try {
             $setting = Setting::findOrFail($id);
+            if($setting->is_urgent == 1){
+                return redirect()->back()->withInput()
+                ->with('error', 'Setting gagal dihapus, Setting ini diperlukan dalam sistem');
+            }
             if($setting->type_form == 'image' || $setting->type_form == 'file'){
                 if ($setting->the_value && storage_path('app/public/' . $setting->the_value)) {
                     // Hapus file lama
@@ -280,6 +289,7 @@ class SettingController extends Controller
         try {
             // Simpan quotation baru
             $gs = GroupSetting::findOrFail($id);
+            
             $gs->update([
                 'name' => $request->name,
             ]);
@@ -305,7 +315,12 @@ class SettingController extends Controller
 
     public function destroyGroup($id){
         try {
-            GroupSetting::destroy($id);
+            $gs = GroupSetting::findOrFail($id);
+            if($gs->is_urgent == 1){
+                return redirect()->back()->withInput()
+                ->with('error', 'Group Setting gagal dihapus, Setting ini diperlukan dalam sistem');
+            }
+            $gs->delete();
             return redirect()->back()
                 ->with('success', 'Group Setting destroyed successfully.');
         } catch (\Exception $e) {
