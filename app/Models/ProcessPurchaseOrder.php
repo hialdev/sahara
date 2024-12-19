@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProcessPurchaseOrder extends Model
@@ -25,6 +26,15 @@ class ProcessPurchaseOrder extends Model
         static::creating(function ($model) {
             if (empty($model->{$model->getKeyName()})) {
                 $model->{$model->getKeyName()} = (string) Str::uuid();
+            }
+        });
+
+        static::deleting(function ($model){
+            if (!empty($model->spk_file) && Storage::exists($model->spk_file)) {
+                Storage::delete($model->spk_file);
+            }
+            if (!empty($model->surjal_file) && Storage::exists($model->surjal_file)) {
+                Storage::delete($model->surjal_file);
             }
         });
     }

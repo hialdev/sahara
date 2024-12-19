@@ -436,7 +436,7 @@
                                         Tidak ada akun yang tepat? <a href="{{route('account.index')}}">buat akun</a> 
                                     </div>
                                     <div class="position-sticky bottom-0 w-100 pb-2 mt-2">
-                                        <button type="submit" class="btn btn-primary w-100">Buat Hutang</button>
+                                        <button type="submit" class="btn btn-primary w-100">Generate Pembayaran Hutang</button>
                                     </div>
                                 </form>
                             </div>
@@ -447,7 +447,7 @@
 
                 {{-- Edit Button --}}
                 @if(!$processed->hasJurnal())
-                <button type="button" id="editButton" data-process-id="{{$debt->processOrder->id}}" class="d-flex mb-1 align-items-center justify-content-center btn btn-sm btn-light-secondary block" style="aspect-ratio:1/1">
+                <button type="button" id="editButton" data-process-id="{{$processed->id}}" class="d-flex mb-1 align-items-center justify-content-center btn btn-sm btn-light-secondary block" style="aspect-ratio:1/1">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                         <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
                             <path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.1 2.1 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621" />
@@ -461,14 +461,14 @@
                 <button type="button" title="Delete Process" class="btn btn-sm mb-1 btn-danger block"
                     style="aspect-ratio:1/1"
                     data-bs-toggle="modal"
-                    data-bs-target="#deleteProcessModal-{{$debt->processOrder->id}}">
+                    data-bs-target="#deleteProcessModal-{{$processed->id}}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 1024 1024">
                         <path fill="currentColor" d="M195.2 195.2a64 64 0 0 1 90.496 0L512 421.504L738.304 195.2a64 64 0 0 1 90.496 90.496L602.496 512L828.8 738.304a64 64 0 0 1-90.496 90.496L512 602.496L285.696 828.8a64 64 0 0 1-90.496-90.496L421.504 512L195.2 285.696a64 64 0 0 1 0-90.496" />
                     </svg>
                 </button>
 
                 {{-- Delete Process Modal --}}
-                <div class="modal fade" id="deleteProcessModal-{{$debt->processOrder->id}}" tabindex="-1" role="dialog"
+                <div class="modal fade" id="deleteProcessModal-{{$processed->id}}" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable w-100"
                         role="document">

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PurchaseOrder extends Model
@@ -29,6 +30,9 @@ class PurchaseOrder extends Model
         });
         static::deleting(function ($model) {
             $model->getProducts()->delete();
+            if (!empty($model->po_file) && Storage::exists($model->po_file)) {
+                Storage::delete($model->po_file);
+            }
         });
     }
 

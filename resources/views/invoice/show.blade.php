@@ -406,7 +406,7 @@
                                         Tidak ada akun yang tepat? <a href="{{route('account.index')}}">buat akun</a> 
                                     </div>
                                     <div class="position-sticky bottom-0 w-100 pb-2 mt-2">
-                                        <button type="submit" class="btn btn-primary w-100">Buat Hutang</button>
+                                        <button type="submit" class="btn btn-primary w-100">Generate Penerimaan Pembayaran</button>
                                     </div>
                                 </form>
                             </div>

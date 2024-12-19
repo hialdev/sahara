@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class DebtProcess extends Model
@@ -25,6 +26,12 @@ class DebtProcess extends Model
         static::creating(function ($model) {
             if (empty($model->{$model->getKeyName()})) {
                 $model->{$model->getKeyName()} = (string) Str::uuid();
+            }
+        });
+
+        static::deleting(function ($model){
+            if (!empty($model->proof_paid) && Storage::exists($model->proof_paid)) {
+                Storage::delete($model->proof_paid);
             }
         });
     }
