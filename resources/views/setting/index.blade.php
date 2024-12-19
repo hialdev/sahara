@@ -187,6 +187,7 @@
         @foreach ($group_settings as $setting)
         <div class="tab-pane fade {{$loop->index == 0 ? 'show active' : ''}}" id="{{$setting->id}}" role="tabpanel" aria-labelledby="{{$setting->id}}-tab">
             <div class="d-flex align-items-center justify-content-end mb-3">
+                @if($setting->is_urgent != 1)
                 <button type="button" class="btn btn-sm btn-outline-danger block"
                     style="aspect-ratio:1/1"
                     data-bs-toggle="modal"
@@ -229,7 +230,9 @@
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
+
             @foreach ($setting->settings as $item)
                 <div class="card mb-2">
                     <div class="card-body">
@@ -337,6 +340,7 @@
                                     data-index="{{$item->id}}"
                                     data-form-type="{{$item->type_form}}"
                                     data-key="{{$item->the_key}}"
+                                    
                                     >
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                         <path fill="currentColor" d="M10.277 16.515c.005-.11.186-.154.24-.058c.254.45.686 1.111 1.176 1.412s1.276.386 1.792.408c.11.005.153.186.057.24c-.45.254-1.11.686-1.411 1.176s-.386 1.276-.408 1.792c-.005.11-.187.153-.24.057c-.254-.45-.686-1.11-1.177-1.411c-.49-.301-1.276-.386-1.791-.408c-.11-.005-.154-.187-.058-.24c.45-.254 1.111-.686 1.412-1.177c.3-.49.386-1.276.408-1.791" />
@@ -392,6 +396,7 @@
                                     </div>
                                 </div>
                                 @endif
+                                @if($item->is_urgent != 1)
                                 <button type="button" class="btn btn-sm btn-outline-danger block"
                                     style="aspect-ratio:1/1"
                                     data-bs-toggle="modal"
@@ -434,6 +439,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endif
                             </div>
                         </div>
                     </div>
