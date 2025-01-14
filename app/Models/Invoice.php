@@ -53,18 +53,27 @@ class Invoice extends Model
         $tanggal = Carbon::now();
         // Ambil tahun sekarang
         $tahun = $tanggal->year;
-        // Hitung urutan surat di tahun yang sama
-        $countSurat = self::whereYear('date', $tahun)
-                        ->count();
-        // Tambah 1 agar menjadi urutan surat yang baru
-        $urutanSurat = str_pad($countSurat + 1, 3, '0', STR_PAD_LEFT);
+
+        // Cari nomor surat terakhir untuk tahun yang sama
+        $lastNomorSurat = self::whereYear('date', $tahun)
+                            ->orderByDesc('no') // Urutkan berdasarkan id atau nomor surat yang terbaru
+                            ->first();
+
+        // Ambil nomor urut dari nomor surat terakhir
+        $urutanSurat = $lastNomorSurat ? intval(explode('/', $lastNomorSurat->no)[1]) : 0;
+        $newNumber = $urutanSurat + 1;
+        // Format urutan surat agar memiliki 3 digit
+        $urutanSurat = str_pad($newNumber, 3, '0', STR_PAD_LEFT);
+
         // Ambil bulan dalam format Romawi
         $bulanRomawi = self::convertToRoman($tanggal->month);
-        // Format nomor surat: QT/xxx/RSM/X/2024
+
+        // Format nomor surat: INV/xxx/RSM/X/2024
         $nomorSurat = "INV/{$urutanSurat}/RSM/{$bulanRomawi}/{$tahun}";
 
         return $nomorSurat;
     }
+
 
     // Fungsi untuk mengkonversi angka bulan ke angka romawi
     public static function convertToRoman($month)
